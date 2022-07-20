@@ -1,0 +1,38 @@
+baseurl = "https://wgeorgecook.github.io"
+languageCode = "en-us"
+theme = "terminal"
+paginate = 1
+
+[params]
+  contentTypeName = "content"
+  themeColor = "pink"
+  showMenuItems = 5
+  fullWidthTheme = false
+  centerTheme = true
+  missingContentMessage = "This is not the page you're looking for."
+  missingBackButtonLabel = "Back to About"
+
+[languages]
+  [languages.en]
+    title = "William George Cook"
+    subtitle = "About me"
+    keywords = "developer"
+    copyright = "William George Cook 2022"
+
+    [languages.en.params.logo]
+      logoText = "William George Cook"
+      logoHomeLink = "/"
+
+    [languages.en.menu]
+      [[languages.en.menu.main]]
+        identifier = "about"
+        name = "About"
+        url = "/about"
+      [[languages.en.menu.main]]
+        identifier = "public_projects"
+        name = "Public Projects"
+        url = "/showcase"
+      [[languages.en.menu.main]]
+        identifier = "contact"
+        name = "Contact"
+        url = "/contact"
