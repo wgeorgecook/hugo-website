@@ -1,6 +1,5 @@
 ---
 title: "Highlighted Works"
-author: "William George Cook"
 ---
 
 # Charity Yeti

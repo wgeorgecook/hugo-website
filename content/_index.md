@@ -1,6 +1,5 @@
 +++
 title = "About"
-author = "William George Cook"
 +++
 
 # Hello there!
