@@ -35,7 +35,7 @@ print(type(my_string))
 ```
 
 ## Lesson Learned
-We switched to Go for the concurrency benefits but also the type system and compiler helps save us from these runtime errors. The same function in Go in would result in a compile time error:
+We switched to Go for the concurrency benefits but also the type system and compiler helps save us from these runtime errors. The same function in Go would result in a compile time error:
 ```code=
 func changeString(doIt bool) string {
         if doIt {
