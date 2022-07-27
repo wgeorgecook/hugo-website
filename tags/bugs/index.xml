@@ -14,7 +14,7 @@ print(type(my_string))
 &amp;gt; None
 &amp;gt; &amp;lt;class &amp;#39;NoneType&amp;#39;&amp;gt;
 &lt;/code>&lt;/pre>&lt;h2 id="lesson-learned">Lesson Learned&lt;/h2>
-&lt;p>We switched to Go for the concurrency benefits but also the type system and compiler helps save us from these runtime errors. The same function in Go in would result in a compile time error:&lt;/p>
+&lt;p>We switched to Go for the concurrency benefits but also the type system and compiler helps save us from these runtime errors. The same function in Go would result in a compile time error:&lt;/p>
 &lt;pre tabindex="0">&lt;code class="language-code=" data-lang="code=">func changeString(doIt bool) string {
 if doIt {
 return &amp;#34;Changed!&amp;#34;

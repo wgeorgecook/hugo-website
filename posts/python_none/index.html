@@ -10,7 +10,7 @@ print(type(my_string))
 
 &gt; None
 &gt; &lt;class &#39;NoneType&#39;&gt;
-</code></pre><h2 id=lesson-learned>Lesson Learned<a href=#lesson-learned class=hanchor arialabel=Anchor>&#8983;</a></h2><p>We switched to Go for the concurrency benefits but also the type system and compiler helps save us from these runtime errors. The same function in Go in would result in a compile time error:</p><pre tabindex=0><code class="language-code=" data-lang="code=">func changeString(doIt bool) string {
+</code></pre><h2 id=lesson-learned>Lesson Learned<a href=#lesson-learned class=hanchor arialabel=Anchor>&#8983;</a></h2><p>We switched to Go for the concurrency benefits but also the type system and compiler helps save us from these runtime errors. The same function in Go would result in a compile time error:</p><pre tabindex=0><code class="language-code=" data-lang="code=">func changeString(doIt bool) string {
         if doIt {
                 return &#34;Changed!&#34;
         }
