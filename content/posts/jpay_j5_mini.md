@@ -1,11 +1,10 @@
 +++
 title = "Jpay_j5_mini"
 date = "2022-09-20T08:42:23-07:00"
-author = ""
-authorTwitter = "" #do not include @
+author = "William Cook"
 cover = ""
-tags = ["jpay", "incarceration", "jp5 mini]
-keywords = ["incarcerated", "jpay", "hack", "root", "sd card]
+tags = ["jpay", "incarceration", "jp5 mini"]
+keywords = ["incarcerated", "jpay", "hack", "root", "sd card"]
 description = "Extracting Content From the JPay JP5 Mini Tablet for Incarcerated Individuals"
 showFullContent = false
 readingTime = false
