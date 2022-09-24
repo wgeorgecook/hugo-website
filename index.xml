@@ -1,4 +1,66 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>About on William George Cook</title><link>https://williamgeorgecook.com/</link><description>Recent content in About on William George Cook</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>William George Cook 2022</copyright><lastBuildDate>Tue, 20 Sep 2022 08:42:23 -0700</lastBuildDate><atom:link href="https://williamgeorgecook.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Jpay_j5_mini</title><link>https://williamgeorgecook.com/posts/jpay_j5_mini/</link><pubDate>Tue, 20 Sep 2022 08:42:23 -0700</pubDate><guid>https://williamgeorgecook.com/posts/jpay_j5_mini/</guid><description>J5 Mini and Purchased Content A friend of mine recently finished his sentance at a facility that allowed them to purchase the JP5 Mini tablet for use while incarcerated. After his release, JPay removed the in-facility restrictions and allowed them to retain the media they purchased from JPay over the course of their sentancing. However, due to the conditions of their release, they are unable to operate such electronic devices. They still wanted to keep their purchased media, so I figured I would try my hand.</description><content>&lt;h1 id="j5-mini-and-purchased-content">J5 Mini and Purchased Content&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>About on William George Cook</title><link>https://williamgeorgecook.com/</link><description>Recent content in About on William George Cook</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>William George Cook 2022</copyright><lastBuildDate>Fri, 23 Sep 2022 10:21:08 -0700</lastBuildDate><atom:link href="https://williamgeorgecook.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Javascript_truthiness</title><link>https://williamgeorgecook.com/posts/javascript_truthiness/</link><pubDate>Fri, 23 Sep 2022 10:21:08 -0700</pubDate><guid>https://williamgeorgecook.com/posts/javascript_truthiness/</guid><description>Comparisons in Javascript While my title may say &amp;ldquo;Full Stack&amp;rdquo;, I&amp;rsquo;m really a backend dev who is pretty flexible and willing to hack around the front end when necessary. This can sometimes lead to me falling for some Javascript gotchas (see also [Python None]https://williamgeorgecook.com/posts/python_none/). This week in Adventures With Javascript, I got to scratch my head on a bug where a form was falling back to a default value even when a valid input was entered.</description><content>&lt;h2 id="comparisons-in-javascript">Comparisons in Javascript&lt;/h2>
+&lt;p>While my title may say &amp;ldquo;Full Stack&amp;rdquo;, I&amp;rsquo;m really a backend dev who is pretty flexible and willing to hack around the front end when necessary. This can sometimes lead to me falling for some Javascript gotchas (see also [Python None]https://williamgeorgecook.com/posts/python_none/). This week in Adventures With Javascript, I got to scratch my head on a bug where a form was falling back to a default value even when a valid input was entered.&lt;/p>
+&lt;h3 id="a-flexible-type-system">A Flexible Type System&lt;/h3>
+&lt;p>One of Javascripts biggest flaws is actually one of it&amp;rsquo;s biggest strengths. Since Javascript does not require strict typing, it&amp;rsquo;s able to compare two different types and Javascript will do it&amp;rsquo;s best to coerce them to a shared type. For instance, you can compare strings and integers:&lt;/p>
+&lt;pre tabindex="0">&lt;code>const a = 1;
+const b = &amp;#39;1&amp;#39;;
+console.log(a == b);
+&amp;gt; true
+&lt;/code>&lt;/pre>&lt;p>You can compare strings and booleans:&lt;/p>
+&lt;pre tabindex="0">&lt;code>const a = false;
+const b = &amp;#39;&amp;#39;;
+console.log(a == b);
+&amp;gt; true
+&lt;/code>&lt;/pre>&lt;p>This flexibility makes it a lot less daunting for new developers. And if you&amp;rsquo;re designing and api but haven&amp;rsquo;t settled on a schema for the data,this system makes prototyping very rapid. However, there can be unintended drawbacks.&lt;/p>
+&lt;h3 id="type-coercion">Type Coercion&lt;/h3>
+&lt;p>You&amp;rsquo;ll notice in the second example above that an empty string is coerced to a falsy boolean. The same thing happens with the number 0.&lt;/p>
+&lt;pre tabindex="0">&lt;code>const a = false;
+const b = 0;
+console.log(a == b);
+&amp;gt; true
+&lt;/code>&lt;/pre>&lt;p>Which can cause some issues if you&amp;rsquo;re doing some form validation where 0 is either a valid input, or the user provided input is transformed to 0 for the backend to process. In this example I was coercing a 12 hour AM/PM based user input into a 24 hour based number to send to the backend.&lt;/p>
+&lt;pre tabindex="0">&lt;code>const twelveToTwentyFour = (timeInt, amOrPm) =&amp;gt; {
+if (amOrPm == &amp;#39;PM&amp;#39;) {
+// Add 12 to the provided timeInt but don&amp;#39;t send 12 PM as 24
+return (timeInt === 12) ? 12 : timeInt + 12;
+} else {
+// Ensure we don&amp;#39;t send 12 AM as 12
+return (timeInt === 12) ? 0 : timeInt;
+}
+}
+&lt;/code>&lt;/pre>&lt;h3 id="bug-hunting">Bug Hunting&lt;/h3>
+&lt;p>If the user passes in 12AM to this function, we transform it to 0 before we send it to the backend. However, this caused issues when we try to validate the form and fill in default values.&lt;/p>
+&lt;pre tabindex="0">&lt;code> const start = twelveToTwentyFour(12, &amp;#39;AM&amp;#39;) || 8;
+console.log(start);
+&amp;gt; 8
+&lt;/code>&lt;/pre>&lt;p>12AM is a valid time, so why are we getting the default value set on the form? Type coercion comes to help in here because we&amp;rsquo;re doing the &lt;code>or&lt;/code> operation here to validate the input.&lt;/p>
+&lt;pre tabindex="0">&lt;code>const a = 0;
+const b = 8;
+console.log(a || b);
+&amp;gt; 8
+&lt;/code>&lt;/pre>&lt;p>You can verify that 0 here is being interpreted as a falsy value but comparing against a falsy boolean:&lt;/p>
+&lt;pre tabindex="0">&lt;code>const a = 0;
+const b = false;
+console.log(a == b);
+&amp;gt; true
+&lt;/code>&lt;/pre>&lt;h3 id="bug-squishing">Bug Squishing&lt;/h3>
+&lt;p>So here we are! We identified the bug. But how do we fix it? Luckily, Javascript has a way to do &lt;em>strict&lt;/em> type checking. Substitute that double equals (&lt;code>==&lt;/code>) for a triple equals (&lt;code>===&lt;/code>) and you&amp;rsquo;ll get more expected results.&lt;/p>
+&lt;pre tabindex="0">&lt;code>const a = 0;
+const b = false;
+console.log(a === b);
+&amp;gt; false
+&lt;/code>&lt;/pre>&lt;p>We need to change our original valiation a little. Prior to user input, our start value is &lt;code>undefined&lt;/code>. Using a strict equality check on &lt;code>undefined&lt;/code> we can determine if we need to set this to the user provided input, or default it to 8.&lt;/p>
+&lt;pre tabindex="0">&lt;code>const parsed = twelveToTwentyFour(12, &amp;#39;AM&amp;#39;)
+const start = (parsed === undefined) ? 8 : parsed;
+console.log(start);
+&amp;gt; 0
+&lt;/code>&lt;/pre>&lt;p>Calling the function without any arguments validates this for us.&lt;/p>
+&lt;pre tabindex="0">&lt;code>const parsed = twelveToTwentyFour()
+const start = (parsed === undefined) ? 8 : parsed;
+console.log(start);
+&amp;gt; 8
+&lt;/code>&lt;/pre>&lt;h2 id="how-many-equals">How Many Equals?&lt;/h2>
+&lt;p>If you&amp;rsquo;re like me and used to programming in strictly typed systems, some Javascript niceties like the triple equals can slip your mind. Sometimes you&amp;rsquo;re dealing with component libraries and the return values from those components don&amp;rsquo;t match what your API require. However, unless you have a really good reason to use a loose comparison, use the strict equals operator and avoid spending half a day dealing with problems like this. If you want to explore how the loose equality operator handles these type comparisons, &lt;a href="https://dorey.github.io/JavaScript-Equality-Table/">this table&lt;/a> shows exactly what comparisons are truthy and which are not.&lt;/p></content></item><item><title>Jpay_j5_mini</title><link>https://williamgeorgecook.com/posts/jpay_j5_mini/</link><pubDate>Tue, 20 Sep 2022 08:42:23 -0700</pubDate><guid>https://williamgeorgecook.com/posts/jpay_j5_mini/</guid><description>J5 Mini and Purchased Content A friend of mine recently finished his sentance at a facility that allowed them to purchase the JP5 Mini tablet for use while incarcerated. After his release, JPay removed the in-facility restrictions and allowed them to retain the media they purchased from JPay over the course of their sentancing. However, due to the conditions of their release, they are unable to operate such electronic devices. They still wanted to keep their purchased media, so I figured I would try my hand.</description><content>&lt;h1 id="j5-mini-and-purchased-content">J5 Mini and Purchased Content&lt;/h1>
 &lt;p>A friend of mine recently finished his sentance at a facility that
 allowed them to purchase the &lt;a href="https://www.prnewswire.com/news-releases/jpay-introduces-the-jp5mini-a-highly-customized-android-tablet-for-inmates-300110638.html">JP5 Mini&lt;/a> tablet for use while incarcerated. After his release, JPay removed the
 in-facility restrictions and allowed them to retain the media they purchased from
