@@ -16,6 +16,6 @@ I live in California with my wife, daughter, and pitty puppy. I volunteer at our
 ### Find me on the Internet
 Twitter: [@wgeorgecook](https://twitter.com/WGeorgeCook)
 
-Mastodon: <a rel="me" href="https://hachyderm.io/@williamcook">@williamcook@hackyderm.io</a>
+Mastodon: <a rel="me" href="https://hachyderm.io/@williamcook">@williamcook@hachyderm.io</a>
 
 Github: [wgeorgecook](https://github.com/wgeorgecook/)
