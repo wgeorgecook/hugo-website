@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Design Pattern on</title><link>https://williamcook.dev/tags/design-pattern/</link><description>Recent content in Design Pattern on</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 07 Aug 2024 21:08:38 -0400</lastBuildDate><atom:link href="https://williamcook.dev/tags/design-pattern/index.xml" rel="self" type="application/rss+xml"/><item><title>Functional_options_golang</title><link>https://williamcook.dev/posts/functional_options_golang/</link><pubDate>Wed, 07 Aug 2024 21:08:38 -0400</pubDate><guid>https://williamcook.dev/posts/functional_options_golang/</guid><description>Lets say&amp;hellip; You are the maintainer of a widely used function in a fairly large service. This function abstracts away all of the boilerplate necessary to log an error. The wider service has several different debugging tools. For example, it could:
+Log errors to Rollbar Instrument OpenTelemetry Support logging to stdout, to disk, or an async log aggregator. the list can theoretically go on and on.
+LogErrors&amp;rsquo;s Humble Beginnings To start, you write your function to support your own use case, and make the api easy to consume for others.</description><content>&lt;h1 id="lets-say">Lets say&amp;hellip;&lt;/h1>
+&lt;p>You are the maintainer of a widely used function in a fairly large service. This function abstracts away
+all of the boilerplate necessary to log an error. The wider service has several different debugging tools.
+For example, it could:&lt;/p>
+&lt;ol>
+&lt;li>Log errors to &lt;a href="https://rollbar.com">Rollbar&lt;/a>&lt;/li>
+&lt;li>Instrument &lt;a href="https://opentelemetry.io/">OpenTelemetry&lt;/a>&lt;/li>
+&lt;li>Support logging to stdout, to disk, or an async log aggregator.&lt;/li>
+&lt;/ol>
+&lt;p>the list can theoretically go on and on.&lt;/p>
+&lt;h2 id="logerrorss-humble-beginnings">LogErrors&amp;rsquo;s Humble Beginnings&lt;/h2>
+&lt;p>To start, you write your function to support your own use case, and make the api easy to consume for others.&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-code" data-lang="code">func LogError(e error, msg string) {
+// assume a logger is configured
+logger.Error(e.Error + &amp;#34;: &amp;#34; + msg)
+}
+&lt;/code>&lt;/pre>&lt;p>This is a simple enough function that formats an error and invokes the configured logger at the Error level.&lt;/p>
+&lt;h2 id="logerrors-organic-growth">LogError&amp;rsquo;s Organic Growth&lt;/h2>
+&lt;p>As this service matures, things can get out of hand. Let&amp;rsquo;s introduce some other, optional dependencies in a naive way.&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-code" data-lang="code">func LogError(e error, msg string, shouldRollbar bool, spanCtx context.Context) {
+fmtErr := e.Error + &amp;#34;: &amp;#34; + msg
+if shouldRollbar {
+rollbar.Error(fmtErr)
+}
+if spanCtx != nil {
+span := otel.NewSpan(&amp;#34;LogError&amp;#34;, spanCtx)
+defer span.End()
+span.RecordError(fmtErr)
+}
+logger.Error(fmtErr)
+}
+&lt;/code>&lt;/pre>&lt;p>This is fine and functional, but you can see how adding additional, optional features requires a full refactor of every function call. Furthermore, the caller has to populate these arguments even if they are falsy or &lt;code>nil&lt;/code>.&lt;/p>
+&lt;h2 id="a-better-way">A Better Way&lt;/h2>
+&lt;p>We can enforce some required arguments by defining them as we would before. Let&amp;rsquo;s say that &lt;code>err&lt;/code> and &lt;code>msg&lt;/code> are required params. However, logging to a span or triggering a Rollbar are completely optional. We can save the caller a hastle by not requiring them in the function call at all by using the functional options pattern.&lt;/p>
+&lt;h1 id="functional-options">Functional Options&lt;/h1>
+&lt;p>We need to create an &lt;code>option&lt;/code> type that we use internally to drive the logic for behavior. Leave this unexported so the caller doesn&amp;rsquo;t try and use it directly.&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-code" data-lang="code">type option struct {
+withRollbar bool
+withContext context.Context
+}
+&lt;/code>&lt;/pre>&lt;p>The real magic happens when we create a type that returns a function that accepts the option as an argument.&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-code" data-lang="code">type Options func(*option)
+&lt;/code>&lt;/pre>&lt;p>We now create functions that return the &lt;code>Options&lt;/code> type that the caller can use.&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-code" data-lang="code">func WithRollbar() Options {
+return func(o *option) {
+o.withRollbar = true
+}
+}
+func WithContext(ctx context.Context) Option {
+return func(o *option) {
+o.withContext = ctx
+}
+}
+&lt;/code>&lt;/pre>&lt;h2 id="leveraging-functional-options">Leveraging Functional Options&lt;/h2>
+&lt;p>All of the pieces are coming together, but as &lt;code>LogError&lt;/code> stands, it does not use options. Let&amp;rsquo;s fix that by first changing the function signature.&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-code" data-lang="code">func LogError(err error, msg string, opts ...Options) {
+// function body
+}
+&lt;/code>&lt;/pre>&lt;p>Now the &lt;code>err&lt;/code> and &lt;code>message&lt;/code> arguments are required by the compiler (even if nil or empty). The &lt;code>...Options&lt;/code> syntax indicates that &lt;code>LogError&lt;/code> is now a &lt;em>variadic function&lt;/em>, and that the trailing arguments is a slice of length &amp;gt;= 0. The compiler will not enforce that any argument is present for the variadic argument. Functionally this means that &lt;code>opts&lt;/code> is entirely optional! However, we still need to leverage these options within the function.&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-code" data-lang="code">func LogError(err error, msg string, opts ...Options) {
+fmtErr := err.Error() + &amp;#34;: &amp;#34; + msg
+// instantiate an option struct to populate with
+// provided options
+o := options{}
+// iterate through the provided options to populate
+// data on the struct
+for _, opt := opts {
+opt(o)
+}
+// start performing logic based on provided options
+if o.withRollbar {
+rollbar.Error(fmtErr)
+}
+if o.withContext != nil {
+span := otel.NewSpan(&amp;#34;LogError&amp;#34;, spanCtx)
+defer span.End()
+span.RecordError(fmtErr)
+}
+logger.Error(fmtErr)
+}
+&lt;/code>&lt;/pre>&lt;p>You can see the function body doesn&amp;rsquo;t change &lt;em>all that much&lt;/em>. But we have significatly reduced the signature and uncomplicated the things the caller needs to worry about.&lt;/p>
+&lt;h2 id="using-logerror">Using LogError&lt;/h2>
+&lt;p>With functional arguments, all of these are valid invocations of &lt;code>LogError&lt;/code>.&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-code" data-lang="code">err := errors.New(&amp;#34;there was an error!&amp;#34;)
+msg := &amp;#34;could not perform operation&amp;#34;
+ctx := context.Background()
+LogError(err, msg)
+LogError(err, msg, WithContext(ctx))
+LogError(err, msg, WithRollbar())
+LogError(err, msg, WithContext(ctx), WithRollbar())
+LogError(err, msg, WithRollbar(), WithContext(ctx))
+&lt;/code>&lt;/pre>&lt;p>Consumers of &lt;code>LogError&lt;/code> now no longer need to worry about providing a nil context or falsy &lt;code>shouldRollbar&lt;/code> value if they are unconcerned about those features.&lt;/p>
+&lt;h2 id="extending-logerror">Extending LogError&lt;/h2>
+&lt;p>Now that &lt;code>LogError&lt;/code> is a variadic function, we can add more options without needing to refactor any of its consumers. Let&amp;rsquo;s implement optionally logging to disk instead of standard out.&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-code" data-lang="code">type option struct {
+withRollbar bool
+withContext context.Context
+withLogToDisk bool // new field
+}
+func WithLogToDisk() Option {
+return func(o *option) {
+o.withLogToDisk = true
+}
+}
+func LogError(err error, msg string, opts ...Options) {
+fmtErr := err.Error() + &amp;#34;: &amp;#34; + msg
+// instantiate an option struct to populate with
+// provided options
+o := options{}
+// iterate through the provided options to populate
+// data on the struct
+for _, opt := opts {
+opt(o)
+}
+// start performing logic based on provided options
+if o.withRollbar {
+rollbar.Error(fmtErr)
+}
+if o.withContext != nil {
+span := otel.NewSpan(&amp;#34;LogError&amp;#34;, spanCtx)
+defer span.End()
+span.RecordError(fmtErr)
+}
+if o.withLogToDisk {
+// helper function assumed to exist
+logErrorToDisk(fmtErr)
+return
+}
+logger.Error(fmtErr)
+}
+&lt;/code>&lt;/pre>&lt;p>&lt;code>LogError&lt;/code> is now more functional for consumers who wish to leverage this option. However, because of the variadic nature of &lt;code>LogError&lt;/code>, we don&amp;rsquo;t need to do a single bit of refactoring the consumers and the api is unchanged. Anyone who wishes to log to disk instead of to standard out can do so like this:&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-code" data-lang="code">err := errors.New(&amp;#34;there was an error!&amp;#34;)
+msg := &amp;#34;could not perform operation&amp;#34;
+LogError(err, msg, WithLogToDisk())
+&lt;/code>&lt;/pre>&lt;h1 id="thats-pretty-neat">That&amp;rsquo;s Pretty Neat&lt;/h1>
+&lt;p>There is the overhead of planning for which arguments are required and which are options when maintaining a function such as &lt;code>LogError&lt;/code>. However, if you know that the function will be broadly consumed from users with differing needs then utilizing functional options is a great way to implement those dependencies without forcing them on every consumer. Functional options allow for easily extending functionality without requiring large refactors for the consumers of its api.&lt;/p></content></item></channel></rss>
