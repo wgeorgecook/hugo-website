@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>About on </title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content in About on </description>
+    <title>Posts on </title>
+    <link>http://localhost:1313/posts/</link>
+    <description>Recent content in Posts on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 07 Aug 2024 21:08:38 -0400</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 Aug 2024 21:08:38 -0400</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Functional_options_golang</title>
       <link>http://localhost:1313/posts/functional_options_golang/</link>
@@ -375,41 +375,6 @@ func main() {
 &amp;gt; go run main.go
 &amp;gt; ./main.go:10:1: missing return
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This Python service isn&amp;rsquo;t a candidate for rewriting in Go any time soon. Remembering to be more thorough in my code review and testing would have saved me from an embarrassing run time error that had some client impact today.&lt;/p&gt;
-</content>
-    </item>
-    
-    <item>
-      <title>Contact</title>
-      <link>http://localhost:1313/contact/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/contact/</guid>
-      <description>Get In Touch LinkedIn Email </description>
-      <content>&lt;h1 id=&#34;get-in-touch&#34;&gt;Get In Touch&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://linkedin.com/in/wgeorgecook&#34;&gt;LinkedIn&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;mailto:web@casadecook.com&#34;&gt;Email&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-    </item>
-    
-    <item>
-      <title>Highlighted Works</title>
-      <link>http://localhost:1313/showcase/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/showcase/</guid>
-      <description>Charity Yeti Charity Yeti aims to raise money for the Partner&amp;rsquo;s In Health maternal center of excellency in Sierra Leone. What began as a Tweet from Hank Green is growing to a platform that allows Twitter users to contribute to ending infant and mother mortality in Sierra Leone.
-Meet Needs Meet Needs is a community broker program that allows for basic moderation. Through Meet Needs, people can submit needs they need met with contact information that is only available to the moderator, and the need itself is posted to the community Needs Board.</description>
-      <content>&lt;h1 id=&#34;charity-yeti&#34;&gt;Charity Yeti&lt;/h1&gt;
-&lt;p&gt;&lt;img alt=&#34;Charity Yeti&#34; src=&#34;http://localhost:1313/img/logo.png&#34; title=&#34;Charity Yeti logo, with &amp;#39;Charity&amp;#39; in purple with a yellow heart dotting the &amp;#39;i&amp;#39;, and &amp;#39;Yeti&amp;#39; in yellow with a purple heart dotting the &amp;#39;i&amp;#39;.&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/wgeorgecook/charityyeti&#34;&gt;Charity Yeti&lt;/a&gt; aims to raise money for the &lt;a href=&#34;https://www.pih.org/maternal-center-excellence?form=hankandjohn&#34;&gt;Partner&amp;rsquo;s In Health maternal center of excellency in Sierra Leone&lt;/a&gt;. What began as a &lt;a href=&#34;https://twitter.com/hankgreen/status/1186824079120011264&#34;&gt;Tweet from Hank Green&lt;/a&gt; is growing to a platform that allows Twitter users to contribute to ending infant and mother mortality in Sierra Leone.&lt;/p&gt;
-&lt;h1 id=&#34;meet-needs&#34;&gt;Meet Needs&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/wgeorgecook/meetneeds&#34;&gt;Meet Needs&lt;/a&gt; is a community broker program that allows for basic moderation. Through Meet Needs, people can submit needs they need met with contact information that is only available to the moderator, and the need itself is posted to the community Needs Board. People can volunteer to meet a need, and send their contact information to the moderator. The goal here is for the moderators to verify both need makers and need fulfillers and connect the two parties.&lt;/p&gt;
-&lt;h1 id=&#34;carb-counter&#34;&gt;Carb Counter&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/wgeorgecook/carbCounter&#34;&gt;Carb Counter&lt;/a&gt; is a nutritional database program that allows users to keep a bank of their common dietary items and search through them to add up the amount of carbs they&amp;rsquo;ve consumed.&lt;/p&gt;
-&lt;h1 id=&#34;github&#34;&gt;Github&lt;/h1&gt;
-&lt;p&gt;You can see more of my little projects and open source contributions on my &lt;a href=&#34;https://github.com/wgeorgecook&#34;&gt;Github&lt;/a&gt;&lt;/p&gt;
 </content>
     </item>
     

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on </title>
+    <link>http://localhost:1313/tags/python/</link>
+    <description>Recent content in Python on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 26 Jul 2022 20:01:56 -0700</lastBuildDate><atom:link href="http://localhost:1313/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python_none</title>
+      <link>http://localhost:1313/posts/python_none/</link>
+      <pubDate>Tue, 26 Jul 2022 20:01:56 -0700</pubDate>
+      
+      <guid>http://localhost:1313/posts/python_none/</guid>
+      <description>Pythonic None Today at work we had a silly bug that exposes how reliant I am on Go&amp;rsquo;s type system and compiler. I personally am too comfortable building a Docker image and assuming that the most egregious bugs were caught simply because the build was successful.
+The Bug Python doesn&amp;rsquo;t require you to specify a return value. In fact, you can have a function that may not explicitly return at all.</description>
+      <content>&lt;h1 id=&#34;pythonic-none&#34;&gt;Pythonic None&lt;/h1&gt;
+&lt;p&gt;Today at work we had a silly bug that exposes how reliant I am on Go&amp;rsquo;s type system and compiler. I personally am too comfortable building a Docker image and assuming that the most egregious bugs were caught simply because the build was successful.&lt;/p&gt;
+&lt;h2 id=&#34;the-bug&#34;&gt;The Bug&lt;/h2&gt;
+&lt;p&gt;Python doesn&amp;rsquo;t require you to specify a return value. In fact, you can have a function that may not explicitly return at all. Since Python is a scripting language, it will automatically return when it hits the bottom of the function being called. When this happens without returning a specific value, any variable assigned to the function call will be &lt;code&gt;None&lt;/code&gt;. A silly but illustrating example:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-code=&#34; data-lang=&#34;code=&#34;&gt;def change_string(do_it: bool) -&amp;gt; str: 
+    if do_it:
+        return &amp;#34;changed!&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This function accepts a boolean that determines whether to do anything at all. According to the type hints and the function name, a string is the expected return type. You can assign the output of this function to a variable like normal:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-code=&#34; data-lang=&#34;code=&#34;&gt;my_string = change_string(False)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;However, since the argument to &lt;code&gt;change_string&lt;/code&gt; is &lt;code&gt;False&lt;/code&gt;, the assignment will suffer from this bug. There is no return statement for a fasly &lt;code&gt;do_it&lt;/code&gt; condition, so when Python reaches the end of the function it will have no choice but to return &lt;code&gt;None&lt;/code&gt;. You can confirm the assignment by printing the value and type of &lt;code&gt;my_string&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-code=&#34; data-lang=&#34;code=&#34;&gt;print(my_string)
+print(type(my_string))
+
+&amp;gt; None
+&amp;gt; &amp;lt;class &amp;#39;NoneType&amp;#39;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;lesson-learned&#34;&gt;Lesson Learned&lt;/h2&gt;
+&lt;p&gt;We switched to Go for the concurrency benefits but also the type system and compiler helps save us from these runtime errors. The same function in Go would result in a compile time error:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-code=&#34; data-lang=&#34;code=&#34;&gt;func changeString(doIt bool) string {
+        if doIt {
+                return &amp;#34;Changed!&amp;#34;
+        }
+}
+
+
+func main() {
+        s := changeString(false)
+        fmt.Println(s)
+
+}
+
+&amp;gt; go run main.go
+&amp;gt; ./main.go:10:1: missing return
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This Python service isn&amp;rsquo;t a candidate for rewriting in Go any time soon. Remembering to be more thorough in my code review and testing would have saved me from an embarrassing run time error that had some client impact today.&lt;/p&gt;
+</content>
+    </item>
+    
+  </channel>
+</rss>
