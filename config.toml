@@ -1,4 +1,4 @@
-baseurl = "https://williamgeorgecook.com"
+baseurl = "https://williamcook.dev"
 languageCode = "en-us"
 theme = "terminal"
 paginate = 5
@@ -19,11 +19,11 @@ paginate = 5
 
 
 [languages]
-  [languages.en]
+  [languages.en.params]
     title = "William George Cook"
     subtitle = "About me"
     keywords = "developer"
-    copyright = "William George Cook 2022"
+    copyright = "William George Cook 2024"
 
     [languages.en.params.logo]
       logoText = "William George Cook"
