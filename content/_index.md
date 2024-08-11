@@ -20,6 +20,6 @@ Spoutible: [@plants](https://spoutible.com/plants)
 
 Mastodon: <a rel="me" href="https://hachyderm.io/@williamcook">@williamcook@hachyderm.io</a>
 
-BlueSky: [@casadecook](https://bsky.app/profile/casadecook.com)
+BlueSky: [@williamcook.dev](https://bsky.app/profile/williamcook.dev)
 
 Github: [wgeorgecook](https://github.com/wgeorgecook/)
