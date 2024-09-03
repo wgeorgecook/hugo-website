@@ -1,6 +1,13 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Extensible Api on</title><link>https://williamcook.dev/tags/extensible-api/</link><description>Recent content in Extensible Api on</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 07 Aug 2024 21:08:38 -0400</lastBuildDate><atom:link href="https://williamcook.dev/tags/extensible-api/index.xml" rel="self" type="application/rss+xml"/><item><title>Functional_options_golang</title><link>https://williamcook.dev/posts/functional_options_golang/</link><pubDate>Wed, 07 Aug 2024 21:08:38 -0400</pubDate><guid>https://williamcook.dev/posts/functional_options_golang/</guid><description>Lets say&amp;hellip; You are the maintainer of a widely used function in a fairly large service. This function abstracts away all of the boilerplate necessary to log an error. The wider service has several different debugging tools. For example, it could:
-Log errors to Rollbar Instrument OpenTelemetry Support logging to stdout, to disk, or an async log aggregator. the list can theoretically go on and on.
-LogErrors&amp;rsquo;s Humble Beginnings To start, you write your function to support your own use case, and make the api easy to consume for others.</description><content>&lt;h1 id="lets-say">Lets say&amp;hellip;&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Extensible Api on</title><link>https://williamcook.dev/tags/extensible-api/</link><description>Recent content in Extensible Api on</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 07 Aug 2024 21:08:38 -0400</lastBuildDate><atom:link href="https://williamcook.dev/tags/extensible-api/index.xml" rel="self" type="application/rss+xml"/><item><title>Functional_options_golang</title><link>https://williamcook.dev/posts/functional_options_golang/</link><pubDate>Wed, 07 Aug 2024 21:08:38 -0400</pubDate><guid>https://williamcook.dev/posts/functional_options_golang/</guid><description>&lt;h1 id="lets-say">Lets say&amp;hellip;&lt;/h1>
+&lt;p>You are the maintainer of a widely used function in a fairly large service. This function abstracts away
+all of the boilerplate necessary to log an error. The wider service has several different debugging tools.
+For example, it could:&lt;/p>
+&lt;ol>
+&lt;li>Log errors to &lt;a href="https://rollbar.com">Rollbar&lt;/a>&lt;/li>
+&lt;li>Instrument &lt;a href="https://opentelemetry.io/">OpenTelemetry&lt;/a>&lt;/li>
+&lt;li>Support logging to stdout, to disk, or an async log aggregator.&lt;/li>
+&lt;/ol>
+&lt;p>the list can theoretically go on and on.&lt;/p></description><content>&lt;h1 id="lets-say">Lets say&amp;hellip;&lt;/h1>
 &lt;p>You are the maintainer of a widely used function in a fairly large service. This function abstracts away
 all of the boilerplate necessary to log an error. The wider service has several different debugging tools.
 For example, it could:&lt;/p>

@@ -1,6 +1,60 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on</title><link>https://williamcook.dev/posts/</link><description>Recent content in Posts on</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 07 Aug 2024 21:08:38 -0400</lastBuildDate><atom:link href="https://williamcook.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Functional_options_golang</title><link>https://williamcook.dev/posts/functional_options_golang/</link><pubDate>Wed, 07 Aug 2024 21:08:38 -0400</pubDate><guid>https://williamcook.dev/posts/functional_options_golang/</guid><description>Lets say&amp;hellip; You are the maintainer of a widely used function in a fairly large service. This function abstracts away all of the boilerplate necessary to log an error. The wider service has several different debugging tools. For example, it could:
-Log errors to Rollbar Instrument OpenTelemetry Support logging to stdout, to disk, or an async log aggregator. the list can theoretically go on and on.
-LogErrors&amp;rsquo;s Humble Beginnings To start, you write your function to support your own use case, and make the api easy to consume for others.</description><content>&lt;h1 id="lets-say">Lets say&amp;hellip;&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on</title><link>https://williamcook.dev/posts/</link><description>Recent content in Posts on</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 03 Sep 2024 14:30:59 -0400</lastBuildDate><atom:link href="https://williamcook.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Go_generate_protobuf</title><link>https://williamcook.dev/posts/go_generate_protobuf/</link><pubDate>Tue, 03 Sep 2024 14:30:59 -0400</pubDate><guid>https://williamcook.dev/posts/go_generate_protobuf/</guid><description>&lt;h1 id="playground-for-go-generate-using-proto-files">Playground for Go Generate Using Proto Files&lt;/h1>
+&lt;p>This is a small application to demonstrate how to use &lt;code>go generate&lt;/code> to compile proto files into Go code.&lt;/p>
+&lt;p>Note: all code is available on GitHub &lt;a href="https://github.com/wgeorgecook/playgen">here&lt;/a>.&lt;/p>
+&lt;h2 id="go-generate">Go Generate&lt;/h2>
+&lt;p>The &lt;a href="https://go.dev/blog/generate">original blog post&lt;/a> by Rob Pike is well worth a read.
+At the bottom, Rob says&lt;/p>
+&lt;blockquote>
+&lt;p>Please use go generate creatively. It’s there to encourage experimentation.&lt;/p></description><content>&lt;h1 id="playground-for-go-generate-using-proto-files">Playground for Go Generate Using Proto Files&lt;/h1>
+&lt;p>This is a small application to demonstrate how to use &lt;code>go generate&lt;/code> to compile proto files into Go code.&lt;/p>
+&lt;p>Note: all code is available on GitHub &lt;a href="https://github.com/wgeorgecook/playgen">here&lt;/a>.&lt;/p>
+&lt;h2 id="go-generate">Go Generate&lt;/h2>
+&lt;p>The &lt;a href="https://go.dev/blog/generate">original blog post&lt;/a> by Rob Pike is well worth a read.
+At the bottom, Rob says&lt;/p>
+&lt;blockquote>
+&lt;p>Please use go generate creatively. It’s there to encourage experimentation.&lt;/p>
+&lt;/blockquote>
+&lt;p>This is one such experimentation.&lt;/p>
+&lt;h2 id="protobuf-gprc-and-generating-code">Protobuf, gPRC, and Generating Code&lt;/h2>
+&lt;p>If you are unfamiliar with &lt;a href="https://protobuf.dev/">Protocol Buffers&lt;/a> and &lt;a href="https://grpc.io/docs/languages/go/quickstart/">gRPC&lt;/a>, those linked resources are worth a read. However, just know that Protobuf is a language spec that allows you to define abstract API contracts within generated code stubs. Your application needs to implement these interfaces for clients to consume. The benefit is that both client and server consume and fulfill requests using the same base &lt;code>.proto&lt;/code> file and its generated code, allowing for incredible type safety.&lt;/p>
+&lt;h2 id="protoc-hassles">Protoc Hassles&lt;/h2>
+&lt;p>Go developers using Protobuf for a few years are probably familiar with the &lt;code>protoc&lt;/code> binary used and the &lt;code>protoc-gen-go&lt;/code> plugin. This is the tool we use to generate Go stubs from proto files. Protoc commands can be provided via scripts, in Dockerfiles, or ran directly to ensure that code is generated and types are accessible to your application. This decouples the proto compilation step from your app compilation. If you want to couple the two together, &lt;code>go generate&lt;/code> may be your answer.&lt;/p>
+&lt;h1 id="go-generate-again">Go Generate (again)&lt;/h1>
+&lt;p>The &lt;code>go generate&lt;/code> command searches through your Go files for the &lt;code>//go:generate&lt;/code> comment (notice no space between the slashes and &lt;code>go&lt;/code>). Adding this tag tells the Go toolchain to run whatever shell commends follow.&lt;/p>
+&lt;h2 id="tagging-for-go-generate">Tagging for Go Generate&lt;/h2>
+&lt;p>You can see here that &lt;code>main.go&lt;/code> has two go generate tags.&lt;/p>
+&lt;pre tabindex="0">&lt;code>//go:generate protoc --go_out=. --go-grpc_out=. proto/helloapis/messages.proto
+//go:generate protoc --go_out=. --go-grpc_out=. proto/helloapis/services.proto
+&lt;/code>&lt;/pre>&lt;p>These two tags will compile protos found in &lt;code>proto/helloapis&lt;/code> and move them into the directory indicated by their package name. In this instance, that directory is &lt;code>gen/helloapis/v1&lt;/code>.&lt;/p>
+&lt;h1 id="building-the-application">Building the Application&lt;/h1>
+&lt;p>Attemping to run &lt;code>go build .&lt;/code> before compiling the protos will fail.&lt;/p>
+&lt;blockquote>
+&lt;p>❯ go build .
+client/client.go:6:2: package playgen/gen/helloapis/v1 is not in std (/snap/go/10630/src/playgen/gen/helloapis/v1)&lt;/p>
+&lt;/blockquote>
+&lt;p>To resolve this, run &lt;code>go generate ./...&lt;/code>.&lt;/p>
+&lt;blockquote>
+&lt;p>❯ go generate ./&amp;hellip;&lt;/p>
+&lt;/blockquote>
+&lt;p>Notice that a new &lt;code>gen&lt;/code> directory is in the repo root.&lt;/p>
+&lt;pre tabindex="0">&lt;code>❯ ls
+build client docker-compose.yaml gen go.mod go.sum main.go proto README.md server
+&lt;/code>&lt;/pre>&lt;p>The application is now buildable and runnable!&lt;/p>
+&lt;pre tabindex="0">&lt;code>❯ go build .
+❯ ls
+build client docker-compose.yaml gen go.mod go.sum main.go playgen proto README.md server
+❯ ./playgen
+Hello, vim-go!
+&lt;/code>&lt;/pre></content></item><item><title>Functional_options_golang</title><link>https://williamcook.dev/posts/functional_options_golang/</link><pubDate>Wed, 07 Aug 2024 21:08:38 -0400</pubDate><guid>https://williamcook.dev/posts/functional_options_golang/</guid><description>&lt;h1 id="lets-say">Lets say&amp;hellip;&lt;/h1>
+&lt;p>You are the maintainer of a widely used function in a fairly large service. This function abstracts away
+all of the boilerplate necessary to log an error. The wider service has several different debugging tools.
+For example, it could:&lt;/p>
+&lt;ol>
+&lt;li>Log errors to &lt;a href="https://rollbar.com">Rollbar&lt;/a>&lt;/li>
+&lt;li>Instrument &lt;a href="https://opentelemetry.io/">OpenTelemetry&lt;/a>&lt;/li>
+&lt;li>Support logging to stdout, to disk, or an async log aggregator.&lt;/li>
+&lt;/ol>
+&lt;p>the list can theoretically go on and on.&lt;/p></description><content>&lt;h1 id="lets-say">Lets say&amp;hellip;&lt;/h1>
 &lt;p>You are the maintainer of a widely used function in a fairly large service. This function abstracts away
 all of the boilerplate necessary to log an error. The wider service has several different debugging tools.
 For example, it could:&lt;/p>
@@ -135,7 +189,8 @@ logger.Error(fmtErr)
 msg := &amp;#34;could not perform operation&amp;#34;
 LogError(err, msg, WithLogToDisk())
 &lt;/code>&lt;/pre>&lt;h1 id="thats-pretty-neat">That&amp;rsquo;s Pretty Neat&lt;/h1>
-&lt;p>There is the overhead of planning for which arguments are required and which are options when maintaining a function such as &lt;code>LogError&lt;/code>. However, if you know that the function will be broadly consumed from users with differing needs then utilizing functional options is a great way to implement those dependencies without forcing them on every consumer. Functional options allow for easily extending functionality without requiring large refactors for the consumers of its api.&lt;/p></content></item><item><title>Javascript_truthiness</title><link>https://williamcook.dev/posts/javascript_truthiness/</link><pubDate>Fri, 23 Sep 2022 10:21:08 -0700</pubDate><guid>https://williamcook.dev/posts/javascript_truthiness/</guid><description>Comparisons in Javascript While my title may say &amp;ldquo;Full Stack&amp;rdquo;, I&amp;rsquo;m really a backend dev who is pretty flexible and willing to hack around the front end when necessary. This can sometimes lead to me falling for some Javascript gotchas (see also [Python None]https://williamcook.dev/posts/python_none/). This week in Adventures With Javascript, I got to scratch my head on a bug where a form was falling back to a default value even when a valid input was entered.</description><content>&lt;h2 id="comparisons-in-javascript">Comparisons in Javascript&lt;/h2>
+&lt;p>There is the overhead of planning for which arguments are required and which are options when maintaining a function such as &lt;code>LogError&lt;/code>. However, if you know that the function will be broadly consumed from users with differing needs then utilizing functional options is a great way to implement those dependencies without forcing them on every consumer. Functional options allow for easily extending functionality without requiring large refactors for the consumers of its api.&lt;/p></content></item><item><title>Javascript_truthiness</title><link>https://williamcook.dev/posts/javascript_truthiness/</link><pubDate>Fri, 23 Sep 2022 10:21:08 -0700</pubDate><guid>https://williamcook.dev/posts/javascript_truthiness/</guid><description>&lt;h2 id="comparisons-in-javascript">Comparisons in Javascript&lt;/h2>
+&lt;p>While my title may say &amp;ldquo;Full Stack&amp;rdquo;, I&amp;rsquo;m really a backend dev who is pretty flexible and willing to hack around the front end when necessary. This can sometimes lead to me falling for some Javascript gotchas (see also [Python None]https://williamcook.dev/posts/python_none/). This week in Adventures With Javascript, I got to scratch my head on a bug where a form was falling back to a default value even when a valid input was entered.&lt;/p></description><content>&lt;h2 id="comparisons-in-javascript">Comparisons in Javascript&lt;/h2>
 &lt;p>While my title may say &amp;ldquo;Full Stack&amp;rdquo;, I&amp;rsquo;m really a backend dev who is pretty flexible and willing to hack around the front end when necessary. This can sometimes lead to me falling for some Javascript gotchas (see also [Python None]https://williamcook.dev/posts/python_none/). This week in Adventures With Javascript, I got to scratch my head on a bug where a form was falling back to a default value even when a valid input was entered.&lt;/p>
 &lt;h3 id="a-flexible-type-system">A Flexible Type System&lt;/h3>
 &lt;p>One of Javascripts biggest flaws is actually one of it&amp;rsquo;s biggest strengths. Since Javascript does not require strict typing, it&amp;rsquo;s able to compare two different types and Javascript will do it&amp;rsquo;s best to coerce them to a shared type. For instance, you can compare strings and integers:&lt;/p>
@@ -197,7 +252,12 @@ const start = (parsed === undefined) ? 8 : parsed;
 console.log(start);
 &amp;gt; 8
 &lt;/code>&lt;/pre>&lt;h2 id="how-many-equals">How Many Equals?&lt;/h2>
-&lt;p>If you&amp;rsquo;re like me and used to programming in strictly typed systems, some Javascript niceties like the triple equals can slip your mind. Sometimes you&amp;rsquo;re dealing with component libraries and the return values from those components don&amp;rsquo;t match what your API require. However, unless you have a really good reason to use a loose comparison, use the strict equals operator and avoid spending half a day dealing with problems like this. If you want to explore how the loose equality operator handles these type comparisons, &lt;a href="https://dorey.github.io/JavaScript-Equality-Table/">this table&lt;/a> shows exactly what comparisons are truthy and which are not.&lt;/p></content></item><item><title>Jpay_j5_mini</title><link>https://williamcook.dev/posts/jpay_j5_mini/</link><pubDate>Tue, 20 Sep 2022 08:42:23 -0700</pubDate><guid>https://williamcook.dev/posts/jpay_j5_mini/</guid><description>J5 Mini and Purchased Content A friend of mine recently finished his sentance at a facility that allowed them to purchase the JP5 Mini tablet for use while incarcerated. After his release, JPay removed the in-facility restrictions and allowed them to retain the media they purchased from JPay over the course of their sentancing. However, due to the conditions of their release, they are unable to operate such electronic devices. They still wanted to keep their purchased media, so I figured I would try my hand.</description><content>&lt;h1 id="j5-mini-and-purchased-content">J5 Mini and Purchased Content&lt;/h1>
+&lt;p>If you&amp;rsquo;re like me and used to programming in strictly typed systems, some Javascript niceties like the triple equals can slip your mind. Sometimes you&amp;rsquo;re dealing with component libraries and the return values from those components don&amp;rsquo;t match what your API require. However, unless you have a really good reason to use a loose comparison, use the strict equals operator and avoid spending half a day dealing with problems like this. If you want to explore how the loose equality operator handles these type comparisons, &lt;a href="https://dorey.github.io/JavaScript-Equality-Table/">this table&lt;/a> shows exactly what comparisons are truthy and which are not.&lt;/p></content></item><item><title>Jpay_j5_mini</title><link>https://williamcook.dev/posts/jpay_j5_mini/</link><pubDate>Tue, 20 Sep 2022 08:42:23 -0700</pubDate><guid>https://williamcook.dev/posts/jpay_j5_mini/</guid><description>&lt;h1 id="j5-mini-and-purchased-content">J5 Mini and Purchased Content&lt;/h1>
+&lt;p>A friend of mine recently finished his sentance at a facility that
+allowed them to purchase the &lt;a href="https://www.prnewswire.com/news-releases/jpay-introduces-the-jp5mini-a-highly-customized-android-tablet-for-inmates-300110638.html">JP5 Mini&lt;/a> tablet for use while incarcerated. After his release, JPay removed the
+in-facility restrictions and allowed them to retain the media they purchased from
+JPay over the course of their sentancing. However, due to the conditions of
+their release, they are unable to operate such electronic devices. They still wanted to keep their purchased media, so I figured I would try my hand.&lt;/p></description><content>&lt;h1 id="j5-mini-and-purchased-content">J5 Mini and Purchased Content&lt;/h1>
 &lt;p>A friend of mine recently finished his sentance at a facility that
 allowed them to purchase the &lt;a href="https://www.prnewswire.com/news-releases/jpay-introduces-the-jp5mini-a-highly-customized-android-tablet-for-inmates-300110638.html">JP5 Mini&lt;/a> tablet for use while incarcerated. After his release, JPay removed the
 in-facility restrictions and allowed them to retain the media they purchased from
@@ -266,8 +326,10 @@ fast, so be patient as they download.&lt;/p>
 &lt;h2 id="the-conclusion">The Conclusion&lt;/h2>
 &lt;p>This is a pretty weird device without a lot of documentation out on
 the internet. I hope that this guide can show up in more searches when
-other folks go digging for information on the JP5 Mini.&lt;/p></content></item><item><title>Python_none</title><link>https://williamcook.dev/posts/python_none/</link><pubDate>Tue, 26 Jul 2022 20:01:56 -0700</pubDate><guid>https://williamcook.dev/posts/python_none/</guid><description>Pythonic None Today at work we had a silly bug that exposes how reliant I am on Go&amp;rsquo;s type system and compiler. I personally am too comfortable building a Docker image and assuming that the most egregious bugs were caught simply because the build was successful.
-The Bug Python doesn&amp;rsquo;t require you to specify a return value. In fact, you can have a function that may not explicitly return at all.</description><content>&lt;h1 id="pythonic-none">Pythonic None&lt;/h1>
+other folks go digging for information on the JP5 Mini.&lt;/p></content></item><item><title>Python_none</title><link>https://williamcook.dev/posts/python_none/</link><pubDate>Tue, 26 Jul 2022 20:01:56 -0700</pubDate><guid>https://williamcook.dev/posts/python_none/</guid><description>&lt;h1 id="pythonic-none">Pythonic None&lt;/h1>
+&lt;p>Today at work we had a silly bug that exposes how reliant I am on Go&amp;rsquo;s type system and compiler. I personally am too comfortable building a Docker image and assuming that the most egregious bugs were caught simply because the build was successful.&lt;/p>
+&lt;h2 id="the-bug">The Bug&lt;/h2>
+&lt;p>Python doesn&amp;rsquo;t require you to specify a return value. In fact, you can have a function that may not explicitly return at all. Since Python is a scripting language, it will automatically return when it hits the bottom of the function being called. When this happens without returning a specific value, any variable assigned to the function call will be &lt;code>None&lt;/code>. A silly but illustrating example:&lt;/p></description><content>&lt;h1 id="pythonic-none">Pythonic None&lt;/h1>
 &lt;p>Today at work we had a silly bug that exposes how reliant I am on Go&amp;rsquo;s type system and compiler. I personally am too comfortable building a Docker image and assuming that the most egregious bugs were caught simply because the build was successful.&lt;/p>
 &lt;h2 id="the-bug">The Bug&lt;/h2>
 &lt;p>Python doesn&amp;rsquo;t require you to specify a return value. In fact, you can have a function that may not explicitly return at all. Since Python is a scripting language, it will automatically return when it hits the bottom of the function being called. When this happens without returning a specific value, any variable assigned to the function call will be &lt;code>None&lt;/code>. A silly but illustrating example:&lt;/p>

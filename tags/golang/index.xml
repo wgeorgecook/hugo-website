@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Golang on</title><link>https://williamcook.dev/tags/golang/</link><description>Recent content in Golang on</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 03 Sep 2024 14:30:59 -0400</lastBuildDate><atom:link href="https://williamcook.dev/tags/golang/index.xml" rel="self" type="application/rss+xml"/><item><title>Go_generate_protobuf</title><link>https://williamcook.dev/posts/go_generate_protobuf/</link><pubDate>Tue, 03 Sep 2024 14:30:59 -0400</pubDate><guid>https://williamcook.dev/posts/go_generate_protobuf/</guid><description>&lt;h1 id="playground-for-go-generate-using-proto-files">Playground for Go Generate Using Proto Files&lt;/h1>
+&lt;p>This is a small application to demonstrate how to use &lt;code>go generate&lt;/code> to compile proto files into Go code.&lt;/p>
+&lt;p>Note: all code is available on GitHub &lt;a href="https://github.com/wgeorgecook/playgen">here&lt;/a>.&lt;/p>
+&lt;h2 id="go-generate">Go Generate&lt;/h2>
+&lt;p>The &lt;a href="https://go.dev/blog/generate">original blog post&lt;/a> by Rob Pike is well worth a read.
+At the bottom, Rob says&lt;/p>
+&lt;blockquote>
+&lt;p>Please use go generate creatively. It’s there to encourage experimentation.&lt;/p></description><content>&lt;h1 id="playground-for-go-generate-using-proto-files">Playground for Go Generate Using Proto Files&lt;/h1>
+&lt;p>This is a small application to demonstrate how to use &lt;code>go generate&lt;/code> to compile proto files into Go code.&lt;/p>
+&lt;p>Note: all code is available on GitHub &lt;a href="https://github.com/wgeorgecook/playgen">here&lt;/a>.&lt;/p>
+&lt;h2 id="go-generate">Go Generate&lt;/h2>
+&lt;p>The &lt;a href="https://go.dev/blog/generate">original blog post&lt;/a> by Rob Pike is well worth a read.
+At the bottom, Rob says&lt;/p>
+&lt;blockquote>
+&lt;p>Please use go generate creatively. It’s there to encourage experimentation.&lt;/p>
+&lt;/blockquote>
+&lt;p>This is one such experimentation.&lt;/p>
+&lt;h2 id="protobuf-gprc-and-generating-code">Protobuf, gPRC, and Generating Code&lt;/h2>
+&lt;p>If you are unfamiliar with &lt;a href="https://protobuf.dev/">Protocol Buffers&lt;/a> and &lt;a href="https://grpc.io/docs/languages/go/quickstart/">gRPC&lt;/a>, those linked resources are worth a read. However, just know that Protobuf is a language spec that allows you to define abstract API contracts within generated code stubs. Your application needs to implement these interfaces for clients to consume. The benefit is that both client and server consume and fulfill requests using the same base &lt;code>.proto&lt;/code> file and its generated code, allowing for incredible type safety.&lt;/p>
+&lt;h2 id="protoc-hassles">Protoc Hassles&lt;/h2>
+&lt;p>Go developers using Protobuf for a few years are probably familiar with the &lt;code>protoc&lt;/code> binary used and the &lt;code>protoc-gen-go&lt;/code> plugin. This is the tool we use to generate Go stubs from proto files. Protoc commands can be provided via scripts, in Dockerfiles, or ran directly to ensure that code is generated and types are accessible to your application. This decouples the proto compilation step from your app compilation. If you want to couple the two together, &lt;code>go generate&lt;/code> may be your answer.&lt;/p>
+&lt;h1 id="go-generate-again">Go Generate (again)&lt;/h1>
+&lt;p>The &lt;code>go generate&lt;/code> command searches through your Go files for the &lt;code>//go:generate&lt;/code> comment (notice no space between the slashes and &lt;code>go&lt;/code>). Adding this tag tells the Go toolchain to run whatever shell commends follow.&lt;/p>
+&lt;h2 id="tagging-for-go-generate">Tagging for Go Generate&lt;/h2>
+&lt;p>You can see here that &lt;code>main.go&lt;/code> has two go generate tags.&lt;/p>
+&lt;pre tabindex="0">&lt;code>//go:generate protoc --go_out=. --go-grpc_out=. proto/helloapis/messages.proto
+//go:generate protoc --go_out=. --go-grpc_out=. proto/helloapis/services.proto
+&lt;/code>&lt;/pre>&lt;p>These two tags will compile protos found in &lt;code>proto/helloapis&lt;/code> and move them into the directory indicated by their package name. In this instance, that directory is &lt;code>gen/helloapis/v1&lt;/code>.&lt;/p>
+&lt;h1 id="building-the-application">Building the Application&lt;/h1>
+&lt;p>Attemping to run &lt;code>go build .&lt;/code> before compiling the protos will fail.&lt;/p>
+&lt;blockquote>
+&lt;p>❯ go build .
+client/client.go:6:2: package playgen/gen/helloapis/v1 is not in std (/snap/go/10630/src/playgen/gen/helloapis/v1)&lt;/p>
+&lt;/blockquote>
+&lt;p>To resolve this, run &lt;code>go generate ./...&lt;/code>.&lt;/p>
+&lt;blockquote>
+&lt;p>❯ go generate ./&amp;hellip;&lt;/p>
+&lt;/blockquote>
+&lt;p>Notice that a new &lt;code>gen&lt;/code> directory is in the repo root.&lt;/p>
+&lt;pre tabindex="0">&lt;code>❯ ls
+build client docker-compose.yaml gen go.mod go.sum main.go proto README.md server
+&lt;/code>&lt;/pre>&lt;p>The application is now buildable and runnable!&lt;/p>
+&lt;pre tabindex="0">&lt;code>❯ go build .
+❯ ls
+build client docker-compose.yaml gen go.mod go.sum main.go playgen proto README.md server
+❯ ./playgen
+Hello, vim-go!
+&lt;/code>&lt;/pre></content></item></channel></rss>
