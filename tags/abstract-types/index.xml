@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Golang on</title><link>https://williamcook.dev/tags/golang/</link><description>Recent content in Golang on</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 04 Sep 2024 20:42:44 -0400</lastBuildDate><atom:link href="https://williamcook.dev/tags/golang/index.xml" rel="self" type="application/rss+xml"/><item><title>Botanical_exploration_of_abstract_types_in_go</title><link>https://williamcook.dev/posts/botanical_exploration_of_abstract_types_in_go/</link><pubDate>Wed, 04 Sep 2024 20:42:44 -0400</pubDate><guid>https://williamcook.dev/posts/botanical_exploration_of_abstract_types_in_go/</guid><description>&lt;h1 id="a-forest-full-of-trees">A Forest Full of Trees&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Abstract Types on</title><link>https://williamcook.dev/tags/abstract-types/</link><description>Recent content in Abstract Types on</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 04 Sep 2024 20:42:44 -0400</lastBuildDate><atom:link href="https://williamcook.dev/tags/abstract-types/index.xml" rel="self" type="application/rss+xml"/><item><title>Botanical_exploration_of_abstract_types_in_go</title><link>https://williamcook.dev/posts/botanical_exploration_of_abstract_types_in_go/</link><pubDate>Wed, 04 Sep 2024 20:42:44 -0400</pubDate><guid>https://williamcook.dev/posts/botanical_exploration_of_abstract_types_in_go/</guid><description>&lt;h1 id="a-forest-full-of-trees">A Forest Full of Trees&lt;/h1>
 &lt;p>Are you a Go developer who wants a solid reference for how interfaces and struct composition work? Look no further! Inside the &lt;a href="https://github.com/wgeorgecook/interforestaces">code sample on GitHub&lt;/a> are a few submodules you might find handy. Feel free to open up that repo, but we will be referencing code from it here directly.&lt;/p>
 &lt;h2 id="inter-forest-aces">Inter-forest-aces&lt;/h2>
 &lt;p>An interface in Go is an abstract type. That is, it describes something without actually embodying the thing itself. Interfaces take this shape:&lt;/p></description><content>&lt;h1 id="a-forest-full-of-trees">A Forest Full of Trees&lt;/h1>
@@ -86,51 +86,4 @@ fmt.Println(&amp;#34;Brrrr winter! &amp;#34; + t.Winter())
 }
 &lt;/code>&lt;/pre>&lt;p>&lt;code>Lifecycle&lt;/code> does one thing - it progresses through a year of whatever &lt;code>ITree&lt;/code> is passed into it. It does not care whether the &lt;code>ITree&lt;/code> is deciduous, a conifer, or a new, third type! But rather than having &lt;code>deciduous.Lifecycle&lt;/code> and &lt;code>conifer.Lifecycle&lt;/code>, you can have this one place to make these &lt;code>ITree&lt;/code>s grow. Now how neat is that?&lt;/p>
 &lt;h2 id="the-wilderness-must-be-explored">The wilderness must be explored!&lt;/h2>
-&lt;p>Have some fun with this. Create some new types of trees that implement the &lt;code>ITree&lt;/code> interface. Or maybe rename &lt;code>ITree&lt;/code> to &lt;code>IPlant&lt;/code> and create some &lt;code>vascular&lt;/code> and &lt;code>nonvascular&lt;/code> plant types and let &lt;code>deciduous&lt;/code> and &lt;code>conifer&lt;/code> embed those structs as necessary. Test yourself too. Knowing now what you do about interfaces, do you know why &lt;code>trees.New()&lt;/code> can&amp;rsquo;t be passed into the &lt;code>trees.Lifecycle()&lt;/code> function, but both a &lt;code>conifer.New()&lt;/code> and a &lt;code>deciduous.New()&lt;/code> can?&lt;/p></content></item><item><title>Go_generate_protobuf</title><link>https://williamcook.dev/posts/go_generate_protobuf/</link><pubDate>Tue, 03 Sep 2024 14:30:59 -0400</pubDate><guid>https://williamcook.dev/posts/go_generate_protobuf/</guid><description>&lt;h1 id="playground-for-go-generate-using-proto-files">Playground for Go Generate Using Proto Files&lt;/h1>
-&lt;p>This is a small application to demonstrate how to use &lt;code>go generate&lt;/code> to compile proto files into Go code.&lt;/p>
-&lt;p>Note: all code is available on GitHub &lt;a href="https://github.com/wgeorgecook/playgen">here&lt;/a>.&lt;/p>
-&lt;h2 id="go-generate">Go Generate&lt;/h2>
-&lt;p>The &lt;a href="https://go.dev/blog/generate">original blog post&lt;/a> by Rob Pike is well worth a read.
-At the bottom, Rob says&lt;/p>
-&lt;blockquote>
-&lt;p>Please use go generate creatively. It’s there to encourage experimentation.&lt;/p></description><content>&lt;h1 id="playground-for-go-generate-using-proto-files">Playground for Go Generate Using Proto Files&lt;/h1>
-&lt;p>This is a small application to demonstrate how to use &lt;code>go generate&lt;/code> to compile proto files into Go code.&lt;/p>
-&lt;p>Note: all code is available on GitHub &lt;a href="https://github.com/wgeorgecook/playgen">here&lt;/a>.&lt;/p>
-&lt;h2 id="go-generate">Go Generate&lt;/h2>
-&lt;p>The &lt;a href="https://go.dev/blog/generate">original blog post&lt;/a> by Rob Pike is well worth a read.
-At the bottom, Rob says&lt;/p>
-&lt;blockquote>
-&lt;p>Please use go generate creatively. It’s there to encourage experimentation.&lt;/p>
-&lt;/blockquote>
-&lt;p>This is one such experimentation.&lt;/p>
-&lt;h2 id="protobuf-gprc-and-generating-code">Protobuf, gPRC, and Generating Code&lt;/h2>
-&lt;p>If you are unfamiliar with &lt;a href="https://protobuf.dev/">Protocol Buffers&lt;/a> and &lt;a href="https://grpc.io/docs/languages/go/quickstart/">gRPC&lt;/a>, those linked resources are worth a read. However, just know that Protobuf is a language spec that allows you to define abstract API contracts within generated code stubs. Your application needs to implement these interfaces for clients to consume. The benefit is that both client and server consume and fulfill requests using the same base &lt;code>.proto&lt;/code> file and its generated code, allowing for incredible type safety.&lt;/p>
-&lt;h2 id="protoc-hassles">Protoc Hassles&lt;/h2>
-&lt;p>Go developers using Protobuf for a few years are probably familiar with the &lt;code>protoc&lt;/code> binary used and the &lt;code>protoc-gen-go&lt;/code> plugin. This is the tool we use to generate Go stubs from proto files. Protoc commands can be provided via scripts, in Dockerfiles, or ran directly to ensure that code is generated and types are accessible to your application. This decouples the proto compilation step from your app compilation. If you want to couple the two together, &lt;code>go generate&lt;/code> may be your answer.&lt;/p>
-&lt;h1 id="go-generate-again">Go Generate (again)&lt;/h1>
-&lt;p>The &lt;code>go generate&lt;/code> command searches through your Go files for the &lt;code>//go:generate&lt;/code> comment (notice no space between the slashes and &lt;code>go&lt;/code>). Adding this tag tells the Go toolchain to run whatever shell commends follow.&lt;/p>
-&lt;h2 id="tagging-for-go-generate">Tagging for Go Generate&lt;/h2>
-&lt;p>You can see here that &lt;code>main.go&lt;/code> has two go generate tags.&lt;/p>
-&lt;pre tabindex="0">&lt;code>//go:generate protoc --go_out=. --go-grpc_out=. proto/helloapis/messages.proto
-//go:generate protoc --go_out=. --go-grpc_out=. proto/helloapis/services.proto
-&lt;/code>&lt;/pre>&lt;p>These two tags will compile protos found in &lt;code>proto/helloapis&lt;/code> and move them into the directory indicated by their package name. In this instance, that directory is &lt;code>gen/helloapis/v1&lt;/code>.&lt;/p>
-&lt;h1 id="building-the-application">Building the Application&lt;/h1>
-&lt;p>Attemping to run &lt;code>go build .&lt;/code> before compiling the protos will fail.&lt;/p>
-&lt;blockquote>
-&lt;p>❯ go build .
-client/client.go:6:2: package playgen/gen/helloapis/v1 is not in std (/snap/go/10630/src/playgen/gen/helloapis/v1)&lt;/p>
-&lt;/blockquote>
-&lt;p>To resolve this, run &lt;code>go generate ./...&lt;/code>.&lt;/p>
-&lt;blockquote>
-&lt;p>❯ go generate ./&amp;hellip;&lt;/p>
-&lt;/blockquote>
-&lt;p>Notice that a new &lt;code>gen&lt;/code> directory is in the repo root.&lt;/p>
-&lt;pre tabindex="0">&lt;code>❯ ls
-build client docker-compose.yaml gen go.mod go.sum main.go proto README.md server
-&lt;/code>&lt;/pre>&lt;p>The application is now buildable and runnable!&lt;/p>
-&lt;pre tabindex="0">&lt;code>❯ go build .
-❯ ls
-build client docker-compose.yaml gen go.mod go.sum main.go playgen proto README.md server
-❯ ./playgen
-Hello, vim-go!
-&lt;/code>&lt;/pre></content></item></channel></rss>
+&lt;p>Have some fun with this. Create some new types of trees that implement the &lt;code>ITree&lt;/code> interface. Or maybe rename &lt;code>ITree&lt;/code> to &lt;code>IPlant&lt;/code> and create some &lt;code>vascular&lt;/code> and &lt;code>nonvascular&lt;/code> plant types and let &lt;code>deciduous&lt;/code> and &lt;code>conifer&lt;/code> embed those structs as necessary. Test yourself too. Knowing now what you do about interfaces, do you know why &lt;code>trees.New()&lt;/code> can&amp;rsquo;t be passed into the &lt;code>trees.Lifecycle()&lt;/code> function, but both a &lt;code>conifer.New()&lt;/code> and a &lt;code>deciduous.New()&lt;/code> can?&lt;/p></content></item></channel></rss>

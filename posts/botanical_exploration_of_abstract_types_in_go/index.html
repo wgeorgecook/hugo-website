@@ -1,0 +1,81 @@
+<!doctype html><html lang=en><head><title>Botanical_exploration_of_abstract_types_in_go :: </title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="A botanical exploration of abstract types in Go"><meta name=keywords content="go,golang,interfaces,abstract types,composition"><meta name=robots content="noodp"><link rel=canonical href=https://williamcook.dev/posts/botanical_exploration_of_abstract_types_in_go/><link rel=stylesheet href=https://williamcook.dev/assets/style.css><link rel=stylesheet href=https://williamcook.dev/assets/pink.css><link rel=apple-touch-icon href=https://williamcook.dev/img/apple-touch-icon-192x192.png><link rel="shortcut icon" href=https://williamcook.dev/img/favicon/pink.png><meta name=twitter:card content="summary"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Botanical_exploration_of_abstract_types_in_go"><meta property="og:description" content="A botanical exploration of abstract types in Go"><meta property="og:url" content="https://williamcook.dev/posts/botanical_exploration_of_abstract_types_in_go/"><meta property="og:site_name" content><meta property="og:image" content="https://williamcook.dev/img/favicon/pink.png"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:published_time" content="2024-09-04 20:42:44 -0400 -0400"></head><body class=pink><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>William George Cook</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/>About</a></li><li><a href=/contact>Contact</a></li><li><a href=/posts>Posts</a></li><li><a href=/showcase>Public Projects</a></li></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/>About</a></li><li><a href=/contact>Contact</a></li><li><a href=/posts>Posts</a></li><li><a href=/showcase>Public Projects</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://williamcook.dev/posts/botanical_exploration_of_abstract_types_in_go/>Botanical_exploration_of_abstract_types_in_go</a></h1><div class=post-meta><span class=post-date>2024-09-04
+</span><span class=post-author>:: William George Cook</span></div><span class=post-tags>#<a href=https://williamcook.dev/tags/go/>go</a>&nbsp;
+#<a href=https://williamcook.dev/tags/golang/>golang</a>&nbsp;
+#<a href=https://williamcook.dev/tags/interfaces/>interfaces</a>&nbsp;
+#<a href=https://williamcook.dev/tags/abstract-types/>abstract types</a>&nbsp;
+#<a href=https://williamcook.dev/tags/composition/>composition</a>&nbsp;</span><div class=post-content><div><h1 id=a-forest-full-of-trees>A Forest Full of Trees<a href=#a-forest-full-of-trees class=hanchor arialabel=Anchor>&#8983;</a></h1><p>Are you a Go developer who wants a solid reference for how interfaces and struct composition work? Look no further! Inside the <a href=https://github.com/wgeorgecook/interforestaces>code sample on GitHub</a> are a few submodules you might find handy. Feel free to open up that repo, but we will be referencing code from it here directly.</p><h2 id=inter-forest-aces>Inter-forest-aces<a href=#inter-forest-aces class=hanchor arialabel=Anchor>&#8983;</a></h2><p>An interface in Go is an abstract type. That is, it describes something without actually embodying the thing itself. Interfaces take this shape:</p><pre tabindex=0><code>type someIFace interface {
+    someMethod() string
+    someOtherMethod() int
+}
+</code></pre><p>Notice that in <code>someIFace</code>, there are two methods. One returns a string, and another an int. This is helpful if you want a function that operates on types, but you want to adapt what those types are situationally. To put it into context, take the interface from <code>package trees</code>.</p><pre tabindex=0><code>// ITree describes an abstract tree
+type ITree interface {
+	GetCategory() string
+	GetGenus() string
+	GetSpecies() string
+	GetCommonName() string
+	Spring() string
+	Summer() string
+	Fall() string
+	Winter() string
+}
+</code></pre><p>The interface says <em>nothing</em> about any particular tree. It just defines how a concrete tree will describe itself. Some of these methods are <em>implemented</em> (that is to say, these methods exist) on the concrete type <code>Tree</code>.</p><pre tabindex=0><code>// Tree is a concrete structure to build a Tree with.
+type Tree struct {
+	genus, species, commonName string
+}
+
+// GetGenus returns the genus of the receiving tree.
+func (t Tree) GetGenus() string {
+	return t.genus
+}
+
+// GetSpecies returns the species of the receiving tree.
+func (t Tree) GetSpecies() string {
+	return t.species
+}
+
+// GetCommonName returns the common name of the receiving tree.
+func (t Tree) GetCommonName() string {
+	return t.commonName
+}
+</code></pre><p>However, since <code>Tree</code> doesn&rsquo;t implement every method of <code>ITree</code>, it does not <em>satisfy</em> the interface.</p><h2 id=growing-some-deeper-roots>Growing some deeper roots<a href=#growing-some-deeper-roots class=hanchor arialabel=Anchor>&#8983;</a></h2><p>While a <code>Tree</code> implements some of the methods that <code>ITree</code> requires, the methods related to the seaons are left unsatisfied. This is where both packages <code>deciduous</code> and <code>conifer</code> come into play.</p><h3 id=planting-a-seed-or-a-struct>Planting a seed (or a struct)<a href=#planting-a-seed-or-a-struct class=hanchor arialabel=Anchor>&#8983;</a></h3><p>If you come from another language, you might be familiar with <em>inheritance</em>. This is the idea that something (usually a <em>class</em>) can pass down properties to other things (often called their children). The thing receiving these properties is <em>inheriting</em> those from its parent. Go doesn&rsquo;t strictly have this, but we have something close called <em>embedding</em>. When we embed a struct into another, all of the properties of the outer struct are passed down to the struct doing the embedding. Here, both <code>Conifer</code> and <code>Deciduous</code> embed the <code>Trees</code> struct.</p><pre tabindex=0><code>package conifer
+
+// Confier is type of tree. All fields are
+// composed of the Tree type from the trees package.
+type Conifer struct {
+	trees.Tree
+}
+</code></pre><pre tabindex=0><code>package deciduous
+
+// Deciduous is type of tree. All fields are
+// composed of the Tree type from the trees package.
+type Deciduous struct {
+	trees.Tree
+}
+</code></pre><p>Since the <code>trees.Tree</code> struct has methods like <code>GetCommonName</code> and properties like <code>Genus</code> and <code>Species</code>, these two structs do as well.</p><h2 id=a-fork-in-the-road>A Fork in the Road<a href=#a-fork-in-the-road class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Conifers and deciduous trees have different lifecyles through. And they experience the turning of the seasons in very different ways. So we would not want them to receive those methods from a common <code>Tree</code> ancestor. This is why we implement these methods separately for these two different categories of tree. For example:</p><pre tabindex=0><code>package deciduous 
+
+// Spring returns a string representing the
+// action deciduous trees take during spring.
+func (d Deciduous) Spring() string {
+	return &#34;Ahhh, new leaves and flowers!&#34;
+}
+</code></pre><pre tabindex=0><code>package conifer
+
+// Spring returns a string representing the
+// action conifers take during spring.
+func (c Conifer) Spring() string {
+	return &#34;Growing some cones!&#34;
+}
+</code></pre><p>Both of these methods reveal how both differing kinds of trees experience the same thing in their own special way.</p><h2 id=bring-it-around-the-campfire>Bring it around the campfire<a href=#bring-it-around-the-campfire class=hanchor arialabel=Anchor>&#8983;</a></h2><p>As previously mentioned, the real power of an abstract type is to pass it to a function that operates on interfaces. Take a look at the <code>trees.Lifecycle</code> function.</p><pre tabindex=0><code>package trees 
+
+// Lifecycle iterates over the methods found in ITree to describe
+// the argument Tree and it&#39;s life over one year.
+func Lifecycle(t ITree) {
+	fmt.Println(&#34;Hello! I am &#34; + t.GetGenus() + &#34; &#34; + t.GetSpecies() + &#34; (&#34; + t.GetCommonName() + &#34;), &#34; + t.GetCategory() + &#34; tree!&#34;)
+	fmt.Println(&#34;Today I am going through my lifecycle. Come grow with me!&#34;)
+	fmt.Println(&#34;It&#39;s Spring! &#34; + t.Spring())
+	fmt.Println(&#34;Summertime! &#34; + t.Summer())
+	fmt.Println(&#34;Autumn is here. &#34; + t.Fall())
+	fmt.Println(&#34;Brrrr winter! &#34; + t.Winter())
+}
+</code></pre><p><code>Lifecycle</code> does one thing - it progresses through a year of whatever <code>ITree</code> is passed into it. It does not care whether the <code>ITree</code> is deciduous, a conifer, or a new, third type! But rather than having <code>deciduous.Lifecycle</code> and <code>conifer.Lifecycle</code>, you can have this one place to make these <code>ITree</code>s grow. Now how neat is that?</p><h2 id=the-wilderness-must-be-explored>The wilderness must be explored!<a href=#the-wilderness-must-be-explored class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Have some fun with this. Create some new types of trees that implement the <code>ITree</code> interface. Or maybe rename <code>ITree</code> to <code>IPlant</code> and create some <code>vascular</code> and <code>nonvascular</code> plant types and let <code>deciduous</code> and <code>conifer</code> embed those structs as necessary. Test yourself too. Knowing now what you do about interfaces, do you know why <code>trees.New()</code> can&rsquo;t be passed into the <code>trees.Lifecycle()</code> function, but both a <code>conifer.New()</code> and a <code>deciduous.New()</code> can?</p></div></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2024 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span></div></div></footer><script src=https://williamcook.dev/assets/main.js></script><script src=https://williamcook.dev/assets/prism.js></script></div></body></html>

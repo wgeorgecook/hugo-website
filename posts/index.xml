@@ -1,4 +1,92 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on</title><link>https://williamcook.dev/posts/</link><description>Recent content in Posts on</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 03 Sep 2024 14:30:59 -0400</lastBuildDate><atom:link href="https://williamcook.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Go_generate_protobuf</title><link>https://williamcook.dev/posts/go_generate_protobuf/</link><pubDate>Tue, 03 Sep 2024 14:30:59 -0400</pubDate><guid>https://williamcook.dev/posts/go_generate_protobuf/</guid><description>&lt;h1 id="playground-for-go-generate-using-proto-files">Playground for Go Generate Using Proto Files&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on</title><link>https://williamcook.dev/posts/</link><description>Recent content in Posts on</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 04 Sep 2024 20:42:44 -0400</lastBuildDate><atom:link href="https://williamcook.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Botanical_exploration_of_abstract_types_in_go</title><link>https://williamcook.dev/posts/botanical_exploration_of_abstract_types_in_go/</link><pubDate>Wed, 04 Sep 2024 20:42:44 -0400</pubDate><guid>https://williamcook.dev/posts/botanical_exploration_of_abstract_types_in_go/</guid><description>&lt;h1 id="a-forest-full-of-trees">A Forest Full of Trees&lt;/h1>
+&lt;p>Are you a Go developer who wants a solid reference for how interfaces and struct composition work? Look no further! Inside the &lt;a href="https://github.com/wgeorgecook/interforestaces">code sample on GitHub&lt;/a> are a few submodules you might find handy. Feel free to open up that repo, but we will be referencing code from it here directly.&lt;/p>
+&lt;h2 id="inter-forest-aces">Inter-forest-aces&lt;/h2>
+&lt;p>An interface in Go is an abstract type. That is, it describes something without actually embodying the thing itself. Interfaces take this shape:&lt;/p></description><content>&lt;h1 id="a-forest-full-of-trees">A Forest Full of Trees&lt;/h1>
+&lt;p>Are you a Go developer who wants a solid reference for how interfaces and struct composition work? Look no further! Inside the &lt;a href="https://github.com/wgeorgecook/interforestaces">code sample on GitHub&lt;/a> are a few submodules you might find handy. Feel free to open up that repo, but we will be referencing code from it here directly.&lt;/p>
+&lt;h2 id="inter-forest-aces">Inter-forest-aces&lt;/h2>
+&lt;p>An interface in Go is an abstract type. That is, it describes something without actually embodying the thing itself. Interfaces take this shape:&lt;/p>
+&lt;pre tabindex="0">&lt;code>type someIFace interface {
+someMethod() string
+someOtherMethod() int
+}
+&lt;/code>&lt;/pre>&lt;p>Notice that in &lt;code>someIFace&lt;/code>, there are two methods. One returns a string, and another an int. This is helpful if you want a function that operates on types, but you want to adapt what those types are situationally. To put it into context, take the interface from &lt;code>package trees&lt;/code>.&lt;/p>
+&lt;pre tabindex="0">&lt;code>// ITree describes an abstract tree
+type ITree interface {
+GetCategory() string
+GetGenus() string
+GetSpecies() string
+GetCommonName() string
+Spring() string
+Summer() string
+Fall() string
+Winter() string
+}
+&lt;/code>&lt;/pre>&lt;p>The interface says &lt;em>nothing&lt;/em> about any particular tree. It just defines how a concrete tree will describe itself. Some of these methods are &lt;em>implemented&lt;/em> (that is to say, these methods exist) on the concrete type &lt;code>Tree&lt;/code>.&lt;/p>
+&lt;pre tabindex="0">&lt;code>// Tree is a concrete structure to build a Tree with.
+type Tree struct {
+genus, species, commonName string
+}
+// GetGenus returns the genus of the receiving tree.
+func (t Tree) GetGenus() string {
+return t.genus
+}
+// GetSpecies returns the species of the receiving tree.
+func (t Tree) GetSpecies() string {
+return t.species
+}
+// GetCommonName returns the common name of the receiving tree.
+func (t Tree) GetCommonName() string {
+return t.commonName
+}
+&lt;/code>&lt;/pre>&lt;p>However, since &lt;code>Tree&lt;/code> doesn&amp;rsquo;t implement every method of &lt;code>ITree&lt;/code>, it does not &lt;em>satisfy&lt;/em> the interface.&lt;/p>
+&lt;h2 id="growing-some-deeper-roots">Growing some deeper roots&lt;/h2>
+&lt;p>While a &lt;code>Tree&lt;/code> implements some of the methods that &lt;code>ITree&lt;/code> requires, the methods related to the seaons are left unsatisfied. This is where both packages &lt;code>deciduous&lt;/code> and &lt;code>conifer&lt;/code> come into play.&lt;/p>
+&lt;h3 id="planting-a-seed-or-a-struct">Planting a seed (or a struct)&lt;/h3>
+&lt;p>If you come from another language, you might be familiar with &lt;em>inheritance&lt;/em>. This is the idea that something (usually a &lt;em>class&lt;/em>) can pass down properties to other things (often called their children). The thing receiving these properties is &lt;em>inheriting&lt;/em> those from its parent. Go doesn&amp;rsquo;t strictly have this, but we have something close called &lt;em>embedding&lt;/em>. When we embed a struct into another, all of the properties of the outer struct are passed down to the struct doing the embedding. Here, both &lt;code>Conifer&lt;/code> and &lt;code>Deciduous&lt;/code> embed the &lt;code>Trees&lt;/code> struct.&lt;/p>
+&lt;pre tabindex="0">&lt;code>package conifer
+// Confier is type of tree. All fields are
+// composed of the Tree type from the trees package.
+type Conifer struct {
+trees.Tree
+}
+&lt;/code>&lt;/pre>&lt;pre tabindex="0">&lt;code>package deciduous
+// Deciduous is type of tree. All fields are
+// composed of the Tree type from the trees package.
+type Deciduous struct {
+trees.Tree
+}
+&lt;/code>&lt;/pre>&lt;p>Since the &lt;code>trees.Tree&lt;/code> struct has methods like &lt;code>GetCommonName&lt;/code> and properties like &lt;code>Genus&lt;/code> and &lt;code>Species&lt;/code>, these two structs do as well.&lt;/p>
+&lt;h2 id="a-fork-in-the-road">A Fork in the Road&lt;/h2>
+&lt;p>Conifers and deciduous trees have different lifecyles through. And they experience the turning of the seasons in very different ways. So we would not want them to receive those methods from a common &lt;code>Tree&lt;/code> ancestor. This is why we implement these methods separately for these two different categories of tree. For example:&lt;/p>
+&lt;pre tabindex="0">&lt;code>package deciduous
+// Spring returns a string representing the
+// action deciduous trees take during spring.
+func (d Deciduous) Spring() string {
+return &amp;#34;Ahhh, new leaves and flowers!&amp;#34;
+}
+&lt;/code>&lt;/pre>&lt;pre tabindex="0">&lt;code>package conifer
+// Spring returns a string representing the
+// action conifers take during spring.
+func (c Conifer) Spring() string {
+return &amp;#34;Growing some cones!&amp;#34;
+}
+&lt;/code>&lt;/pre>&lt;p>Both of these methods reveal how both differing kinds of trees experience the same thing in their own special way.&lt;/p>
+&lt;h2 id="bring-it-around-the-campfire">Bring it around the campfire&lt;/h2>
+&lt;p>As previously mentioned, the real power of an abstract type is to pass it to a function that operates on interfaces. Take a look at the &lt;code>trees.Lifecycle&lt;/code> function.&lt;/p>
+&lt;pre tabindex="0">&lt;code>package trees
+// Lifecycle iterates over the methods found in ITree to describe
+// the argument Tree and it&amp;#39;s life over one year.
+func Lifecycle(t ITree) {
+fmt.Println(&amp;#34;Hello! I am &amp;#34; + t.GetGenus() + &amp;#34; &amp;#34; + t.GetSpecies() + &amp;#34; (&amp;#34; + t.GetCommonName() + &amp;#34;), &amp;#34; + t.GetCategory() + &amp;#34; tree!&amp;#34;)
+fmt.Println(&amp;#34;Today I am going through my lifecycle. Come grow with me!&amp;#34;)
+fmt.Println(&amp;#34;It&amp;#39;s Spring! &amp;#34; + t.Spring())
+fmt.Println(&amp;#34;Summertime! &amp;#34; + t.Summer())
+fmt.Println(&amp;#34;Autumn is here. &amp;#34; + t.Fall())
+fmt.Println(&amp;#34;Brrrr winter! &amp;#34; + t.Winter())
+}
+&lt;/code>&lt;/pre>&lt;p>&lt;code>Lifecycle&lt;/code> does one thing - it progresses through a year of whatever &lt;code>ITree&lt;/code> is passed into it. It does not care whether the &lt;code>ITree&lt;/code> is deciduous, a conifer, or a new, third type! But rather than having &lt;code>deciduous.Lifecycle&lt;/code> and &lt;code>conifer.Lifecycle&lt;/code>, you can have this one place to make these &lt;code>ITree&lt;/code>s grow. Now how neat is that?&lt;/p>
+&lt;h2 id="the-wilderness-must-be-explored">The wilderness must be explored!&lt;/h2>
+&lt;p>Have some fun with this. Create some new types of trees that implement the &lt;code>ITree&lt;/code> interface. Or maybe rename &lt;code>ITree&lt;/code> to &lt;code>IPlant&lt;/code> and create some &lt;code>vascular&lt;/code> and &lt;code>nonvascular&lt;/code> plant types and let &lt;code>deciduous&lt;/code> and &lt;code>conifer&lt;/code> embed those structs as necessary. Test yourself too. Knowing now what you do about interfaces, do you know why &lt;code>trees.New()&lt;/code> can&amp;rsquo;t be passed into the &lt;code>trees.Lifecycle()&lt;/code> function, but both a &lt;code>conifer.New()&lt;/code> and a &lt;code>deciduous.New()&lt;/code> can?&lt;/p></content></item><item><title>Go_generate_protobuf</title><link>https://williamcook.dev/posts/go_generate_protobuf/</link><pubDate>Tue, 03 Sep 2024 14:30:59 -0400</pubDate><guid>https://williamcook.dev/posts/go_generate_protobuf/</guid><description>&lt;h1 id="playground-for-go-generate-using-proto-files">Playground for Go Generate Using Proto Files&lt;/h1>
 &lt;p>This is a small application to demonstrate how to use &lt;code>go generate&lt;/code> to compile proto files into Go code.&lt;/p>
 &lt;p>Note: all code is available on GitHub &lt;a href="https://github.com/wgeorgecook/playgen">here&lt;/a>.&lt;/p>
 &lt;h2 id="go-generate">Go Generate&lt;/h2>
