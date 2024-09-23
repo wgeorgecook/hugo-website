@@ -7,7 +7,9 @@ For example, it could:&lt;/p>
 &lt;li>Instrument &lt;a href="https://opentelemetry.io/">OpenTelemetry&lt;/a>&lt;/li>
 &lt;li>Support logging to stdout, to disk, or an async log aggregator.&lt;/li>
 &lt;/ol>
-&lt;p>the list can theoretically go on and on.&lt;/p></description><content>&lt;h1 id="lets-say">Lets say&amp;hellip;&lt;/h1>
+&lt;p>the list can theoretically go on and on.&lt;/p>
+&lt;h2 id="logerrorss-humble-beginnings">LogErrors&amp;rsquo;s Humble Beginnings&lt;/h2>
+&lt;p>To start, you write your function to support your own use case, and make the api easy to consume for others.&lt;/p></description><content>&lt;h1 id="lets-say">Lets say&amp;hellip;&lt;/h1>
 &lt;p>You are the maintainer of a widely used function in a fairly large service. This function abstracts away
 all of the boilerplate necessary to log an error. The wider service has several different debugging tools.
 For example, it could:&lt;/p>

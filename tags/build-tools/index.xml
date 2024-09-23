@@ -5,7 +5,11 @@
 &lt;p>The &lt;a href="https://go.dev/blog/generate">original blog post&lt;/a> by Rob Pike is well worth a read.
 At the bottom, Rob says&lt;/p>
 &lt;blockquote>
-&lt;p>Please use go generate creatively. It’s there to encourage experimentation.&lt;/p></description><content>&lt;h1 id="playground-for-go-generate-using-proto-files">Playground for Go Generate Using Proto Files&lt;/h1>
+&lt;p>Please use go generate creatively. It’s there to encourage experimentation.&lt;/p>
+&lt;/blockquote>
+&lt;p>This is one such experimentation.&lt;/p>
+&lt;h2 id="protobuf-gprc-and-generating-code">Protobuf, gPRC, and Generating Code&lt;/h2>
+&lt;p>If you are unfamiliar with &lt;a href="https://protobuf.dev/">Protocol Buffers&lt;/a> and &lt;a href="https://grpc.io/docs/languages/go/quickstart/">gRPC&lt;/a>, those linked resources are worth a read. However, just know that Protobuf is a language spec that allows you to define abstract API contracts within generated code stubs. Your application needs to implement these interfaces for clients to consume. The benefit is that both client and server consume and fulfill requests using the same base &lt;code>.proto&lt;/code> file and its generated code, allowing for incredible type safety.&lt;/p></description><content>&lt;h1 id="playground-for-go-generate-using-proto-files">Playground for Go Generate Using Proto Files&lt;/h1>
 &lt;p>This is a small application to demonstrate how to use &lt;code>go generate&lt;/code> to compile proto files into Go code.&lt;/p>
 &lt;p>Note: all code is available on GitHub &lt;a href="https://github.com/wgeorgecook/playgen">here&lt;/a>.&lt;/p>
 &lt;h2 id="go-generate">Go Generate&lt;/h2>
