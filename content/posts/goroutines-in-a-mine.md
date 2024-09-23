@@ -19,7 +19,7 @@ Concurrency is the ability of a program to do a collective piece of work in chun
 This code (found in my [Github repo here](https://github.com/wgeorgecook/goroutines-in-a-mine)) utilizes interfaces in a similar way I explained in [my botanical exploration of abstract types in Go](https://williamcook.dev/posts/botanical_exploration_of_abstract_types_in_go/) blog post. There is also code generated via `go:generate` comments. Which you can learn more about [in my post about using Go Generate for Protobuf](https://williamcook.dev/posts/go_generate_protobuf/). Neither of those are required reading, but can help you understand the code a little better if some of these topics are a little foreign to you. 
 
 ## More Than One Way to Mine Some Diamonds
-If you've ever spent several days mining some land under your base in _Minecraft_, then you know there's lots of different ways to get those diamonds. You can dig some nice long strips running parallel to catch as much at one level as you want. You can find a cave system and go spellunking until you happen upon a diamond vein. You can load up on TNT and blow up everything withing a couple of chunks and catch what's left over. You can group up with friends. You can take some solo time. It doesn't matter how the diamonds are found, it only matters that they are. 
+If you've ever spent several days mining some land under your base in _Minecraft_, then you know there's lots of different ways to get those diamonds. You can dig some nice long strips running parallel to catch as much at one level as you want. You can find a cave system and go spellunking until you happen upon a diamond vein. You can load up on TNT and blow up everything within a couple of chunks and catch what's left over. You can group up with friends. You can take some solo time. It doesn't matter how the diamonds are found, it only matters that they are. 
 
 ## Worker Patterns in Go
 Many times you want to implement the same pattern in your program. You can have a stream of work and you need to make a few different database calls to build a response. Some data from Mongo, a little bit of Postgres. Grab some data from an S3 bucket. Whatever! The pieces are entirely independent of each other, so they don't need to wait for each other to complete before another can start working again. Now, if you will excuse my brief foray into practicallity, we can resume the contriving. 
@@ -34,7 +34,7 @@ func init() {
 	workChan = make(chan bool, 1)
 }
 ```
-In the `init` function, I create several channels. Channels are the way Goroutines communicate with each other. If you can tell from the context, these are channels for input workers, error reporting, to indicate when work is done, and work to do. Keep reading and see how we send data on a channel.
+In the `init` function, I create several channels. Channels are the way Goroutines communicate with each other. If you can tell from the context, these are channels for input workers, error reporting, to indicate when work is done, and work to do. The channels are empty though, so let's fill them up.
 
 ```go
 	for _, name := range names {
@@ -76,7 +76,7 @@ func Process(inChan InputChan, errChan ErrChan, done DoneChan, workChan WorkChan
 To read from a channel, you can either assign it using the walrus or use it a signal. In either case, you'll want a `select` (if reading from multiple channels) or use `range` on a single channel. 
 
 ## Off to Work We Go
-A keep observer noticed that `Process` function above reads from the `inChan` and assigns it to `i`. It then calls `doWork` passing `i` in as an argument. But we do something special with this function call. It's all about those two magic letters `g` and `o`. Goroutines are spawned when you call a function (either named or anonymous) using the `go` keyword. When a function is called this way, the work is passed off to the scheduler and it unblocks the function it was called from. In the instances of our hard working dwarfs, their work takes an arbitrary amount of time.
+A keen observer noticed that `Process` function above reads from the `inChan` and assigns it to `i`. It then calls `doWork` passing `i` in as an argument. But we do something special with this function call. It's all about those two magic letters `g` and `o`. Goroutines are spawned when you call a function (either named or anonymous) using the `go` keyword. When a function is called this way, the work is passed off to the scheduler and it unblocks the function it was called from. In the instances of our hard working dwarfs, their work takes an arbitrary amount of time.
 ```go
 func (d Dwarf) DoWork() error {
 	d.logStep("doing some work!")
