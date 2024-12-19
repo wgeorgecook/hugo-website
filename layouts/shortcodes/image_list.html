@@ -1,0 +1,9 @@
+<div class="image-gallery">
+    {{ $path := "static/img/why-go"}}
+    {{ $images := readDir $path }}
+    {{ range $images }}
+        <img src="/img/why-go/{{ .Name }}" alt="{{ .Name }}">
+    {{ else }}
+      <p>No images found.</p>
+    {{ end }}
+  </div>
