@@ -19,3 +19,5 @@ If you see me waiting in line for Living With The Land or catching a picture of 
 BlueSky: [@williamcook.dev](https://bsky.app/profile/williamcook.dev)
 
 Github: [wgeorgecook](https://github.com/wgeorgecook/)
+
+LinkedIn: [wgeorgecook](https://linkedin.com/in/wgeorgecook)
