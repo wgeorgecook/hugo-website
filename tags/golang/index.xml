@@ -1,4 +1,48 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Golang on</title><link>https://williamcook.dev/tags/golang/</link><description>Recent content in Golang on</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 22 Sep 2024 22:02:04 -0400</lastBuildDate><atom:link href="https://williamcook.dev/tags/golang/index.xml" rel="self" type="application/rss+xml"/><item><title>Goroutines in a Mine</title><link>https://williamcook.dev/posts/goroutines-in-a-mine/</link><pubDate>Sun, 22 Sep 2024 22:02:04 -0400</pubDate><guid>https://williamcook.dev/posts/goroutines-in-a-mine/</guid><description>&lt;h1 id="a-canary-in-a-gem-mine">A Canary? In a Gem Mine?&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Golang on</title><link>https://williamcook.dev/tags/golang/</link><description>Recent content in Golang on</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 19 Dec 2024 14:29:05 -0500</lastBuildDate><atom:link href="https://williamcook.dev/tags/golang/index.xml" rel="self" type="application/rss+xml"/><item><title>Why Go Ignite Talk</title><link>https://williamcook.dev/posts/why-go-ignite-talk/</link><pubDate>Thu, 19 Dec 2024 14:29:05 -0500</pubDate><guid>https://williamcook.dev/posts/why-go-ignite-talk/</guid><description>&lt;h1 id="why-go">Why Go?&lt;/h1>
+&lt;p>This is less a blog post and more a repository for my slides.&lt;/p>
+&lt;h2 id="background">Background&lt;/h2>
+&lt;p>I gave this talk on December 18th 2024 at the &lt;a href="https://orlandodevs.com">Orlando Devs&lt;/a> Holiday Party.&lt;/p>
+&lt;h2 id="some-notes">Some Notes&lt;/h2>
+&lt;p>As these are just the slides, you&amp;rsquo;re going to miss most of the content of the talk. But know
+that this is a very cursory introduction to Go. All of what I cover and more can be discovered
+on the &lt;a href="https://go.dev/tour/welcome/1">Tour of Go&lt;/a>. I wholly recommend you spend half an hour
+or so to complete that if you are interested in learning more about the Go syntax and features.&lt;/p></description><content>&lt;h1 id="why-go">Why Go?&lt;/h1>
+&lt;p>This is less a blog post and more a repository for my slides.&lt;/p>
+&lt;h2 id="background">Background&lt;/h2>
+&lt;p>I gave this talk on December 18th 2024 at the &lt;a href="https://orlandodevs.com">Orlando Devs&lt;/a> Holiday Party.&lt;/p>
+&lt;h2 id="some-notes">Some Notes&lt;/h2>
+&lt;p>As these are just the slides, you&amp;rsquo;re going to miss most of the content of the talk. But know
+that this is a very cursory introduction to Go. All of what I cover and more can be discovered
+on the &lt;a href="https://go.dev/tour/welcome/1">Tour of Go&lt;/a>. I wholly recommend you spend half an hour
+or so to complete that if you are interested in learning more about the Go syntax and features.&lt;/p>
+&lt;h2 id="following-up">Following Up&lt;/h2>
+&lt;p>Please reach out if you want to learn more about Go or talk about Go-related things! The best
+way is to &lt;a href="https://www.linkedin.com/in/wgeorgecook/">connect with me on LinkedIn&lt;/a>.&lt;/p>
+&lt;h2 id="the-slides">The Slides&lt;/h2>
+&lt;p>Here are my slides! The Gopher photos in the Mascot slide were taken from the &lt;a href="https://go.dev/blog/gopher">Go blog&lt;/a> and the
+backgrounds were made in &lt;a href="https://www.photopea.com/">Photopea&lt;/a> using &lt;a href="https://scrapbox.io/icons/golang">this image&lt;/a> I found online.&lt;/p>
+&lt;div class="image-gallery">
+&lt;img src="https://williamcook.dev/img/why-go/01-why-go.png" alt="01-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/02-why-go.png" alt="02-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/03-why-go.png" alt="03-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/04-why-go.png" alt="04-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/05-why-go.png" alt="05-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/06-why-go.png" alt="06-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/07-why-go.png" alt="07-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/08-why-go.png" alt="08-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/09-why-go.png" alt="09-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/10-why-go.png" alt="10-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/11-why-go.png" alt="11-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/12-why-go.png" alt="12-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/13-why-go.png" alt="13-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/14-why-go.png" alt="14-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/15-why-go.png" alt="15-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/16-why-go.png" alt="16-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/17-why-go.png" alt="17-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/18-why-go.png" alt="18-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/19-why-go.png" alt="19-why-go.png">
+&lt;img src="https://williamcook.dev/img/why-go/20-why-go.png" alt="20-why-go.png">
+&lt;/div></content></item><item><title>Goroutines in a Mine</title><link>https://williamcook.dev/posts/goroutines-in-a-mine/</link><pubDate>Sun, 22 Sep 2024 22:02:04 -0400</pubDate><guid>https://williamcook.dev/posts/goroutines-in-a-mine/</guid><description>&lt;h1 id="a-canary-in-a-gem-mine">A Canary? In a Gem Mine?&lt;/h1>
 &lt;p>Goroutines are, for me, &lt;em>the killer feature of Go&lt;/em>. Asynchronous communication between isolated, concurrent workloads was the use case that made me a Go developer. It&amp;rsquo;s a complex topic, and it can be really easy to do improperly. Heck, I even had to give this little projects a few good go overs to make the example correct.&lt;/p>
 &lt;h2 id="concurrent-work">Concurrent work?&lt;/h2>
 &lt;p>Concurrency is the ability of a program to do a collective piece of work in chunks. Some pieces of that work take longer than others, and sometimes the order in which work is performed does not matter. We can use Goroutines to piece out this work, letting the scheduler start and stop processes as necessary. If you would like some very Go-specific information about the language implementation of concurrency, I &lt;em>highly&lt;/em> recommend reading the &lt;a href="https://go.dev/doc/effective_go#concurrency">Concurrency section of &lt;em>Effective Go&lt;/em> on go.dev&lt;/a>.&lt;/p></description><content>&lt;h1 id="a-canary-in-a-gem-mine">A Canary? In a Gem Mine?&lt;/h1>
