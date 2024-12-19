@@ -4,7 +4,7 @@ title = "About"
 
 # Hello there!
 
-Thank you for stopping by! I'm a full stack lead developer, proficient in Go, Python, and JavaScript (React, mostly and getting better at TypeScript). 
+Thank you for stopping by! I'm a full stack lead developer, proficient in Go, Python, and JavaScript (React, TypeScript). 
 - Current lead developer at [Conquer](conquer.io).
 - I can only succeed if my team succeeds. 
 - Inclusive, empathetic and understanding.
@@ -16,10 +16,8 @@ I love tending to my garden and biking around the neighborhood to all of the gre
 If you see me waiting in line for Living With The Land or catching a picture of a swamp puppy, feel free to say hi! 
 
 ### Find me on the Internet
-Spoutible: [@plants](https://spoutible.com/plants)
-
-Mastodon: <a rel="me" href="https://hachyderm.io/@williamcook">@williamcook@hachyderm.io</a>
-
 BlueSky: [@williamcook.dev](https://bsky.app/profile/williamcook.dev)
 
 Github: [wgeorgecook](https://github.com/wgeorgecook/)
+
+LinkedIn: [wgeorgecook](https://linkedin.com/in/wgeorgecook)
