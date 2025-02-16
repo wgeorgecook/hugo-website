@@ -4,16 +4,16 @@ title = "About"
 
 # Hello there!
 
-Thank you for stopping by! I'm a full stack lead developer, proficient in Go, Python, and JavaScript (React, TypeScript). 
-- Current lead developer at [Conquer](conquer.io).
-- I can only succeed if my team succeeds. 
-- Inclusive, empathetic and understanding.
-- Forever a student and always a mentor. 
+Thank you for stopping by! I hope you find my content insightful or helpful. If you want to continue the conversation, <a href="/contact">reach out</a>! I'm glad to chat. A little about me:
+
+- I'm a full stack developer, proficient in Go, Python, and JavaScript/TypeScript. 
+- I'm a senior developer at Apple.
+- I strive to be an inclusive and empathetic leader.
+- I will never stop learning and take every opportunity to teach what I know.
+
 
 ### Find me on planet Earth
-I live in Orlando, Florida with my family. We enjoy all that central Florida has to offer, especially the world class theme parks and access to endless wilderness.
-I love tending to my garden and biking around the neighborhood to all of the great parks, shops, and restaurants around me.
-If you see me waiting in line for Living With The Land or catching a picture of a swamp puppy, feel free to say hi! 
+Catch me around the south and east bay hugging all the good trees that grow up on the coast or in the mountains. I love to bike or walk as much as I can to get around and am always aspiring to be the best gardener I can be. 
 
 ### Find me on the Internet
 BlueSky: [@williamcook.dev](https://bsky.app/profile/williamcook.dev)
