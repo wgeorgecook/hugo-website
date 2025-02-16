@@ -311,8 +311,7 @@ fmt.Println(&amp;#34;Brrrr winter! &amp;#34; + t.Winter())
 &lt;p>The &lt;a href="https://go.dev/blog/generate">original blog post&lt;/a> by Rob Pike is well worth a read.
 At the bottom, Rob says&lt;/p>
 &lt;blockquote>
-&lt;p>Please use go generate creatively. It’s there to encourage experimentation.&lt;/p>
-&lt;/blockquote>
+&lt;p>Please use go generate creatively. It’s there to encourage experimentation.&lt;/p>&lt;/blockquote>
 &lt;p>This is one such experimentation.&lt;/p>
 &lt;h2 id="protobuf-gprc-and-generating-code">Protobuf, gPRC, and Generating Code&lt;/h2>
 &lt;p>If you are unfamiliar with &lt;a href="https://protobuf.dev/">Protocol Buffers&lt;/a> and &lt;a href="https://grpc.io/docs/languages/go/quickstart/">gRPC&lt;/a>, those linked resources are worth a read. However, just know that Protobuf is a language spec that allows you to define abstract API contracts within generated code stubs. Your application needs to implement these interfaces for clients to consume. The benefit is that both client and server consume and fulfill requests using the same base &lt;code>.proto&lt;/code> file and its generated code, allowing for incredible type safety.&lt;/p></description><content>&lt;h1 id="playground-for-go-generate-using-proto-files">Playground for Go Generate Using Proto Files&lt;/h1>
@@ -322,8 +321,7 @@ At the bottom, Rob says&lt;/p>
 &lt;p>The &lt;a href="https://go.dev/blog/generate">original blog post&lt;/a> by Rob Pike is well worth a read.
 At the bottom, Rob says&lt;/p>
 &lt;blockquote>
-&lt;p>Please use go generate creatively. It’s there to encourage experimentation.&lt;/p>
-&lt;/blockquote>
+&lt;p>Please use go generate creatively. It’s there to encourage experimentation.&lt;/p>&lt;/blockquote>
 &lt;p>This is one such experimentation.&lt;/p>
 &lt;h2 id="protobuf-gprc-and-generating-code">Protobuf, gPRC, and Generating Code&lt;/h2>
 &lt;p>If you are unfamiliar with &lt;a href="https://protobuf.dev/">Protocol Buffers&lt;/a> and &lt;a href="https://grpc.io/docs/languages/go/quickstart/">gRPC&lt;/a>, those linked resources are worth a read. However, just know that Protobuf is a language spec that allows you to define abstract API contracts within generated code stubs. Your application needs to implement these interfaces for clients to consume. The benefit is that both client and server consume and fulfill requests using the same base &lt;code>.proto&lt;/code> file and its generated code, allowing for incredible type safety.&lt;/p>
@@ -340,12 +338,10 @@ At the bottom, Rob says&lt;/p>
 &lt;p>Attemping to run &lt;code>go build .&lt;/code> before compiling the protos will fail.&lt;/p>
 &lt;blockquote>
 &lt;p>❯ go build .
-client/client.go:6:2: package playgen/gen/helloapis/v1 is not in std (/snap/go/10630/src/playgen/gen/helloapis/v1)&lt;/p>
-&lt;/blockquote>
+client/client.go:6:2: package playgen/gen/helloapis/v1 is not in std (/snap/go/10630/src/playgen/gen/helloapis/v1)&lt;/p>&lt;/blockquote>
 &lt;p>To resolve this, run &lt;code>go generate ./...&lt;/code>.&lt;/p>
 &lt;blockquote>
-&lt;p>❯ go generate ./&amp;hellip;&lt;/p>
-&lt;/blockquote>
+&lt;p>❯ go generate ./&amp;hellip;&lt;/p>&lt;/blockquote>
 &lt;p>Notice that a new &lt;code>gen&lt;/code> directory is in the repo root.&lt;/p>
 &lt;pre tabindex="0">&lt;code>❯ ls
 build client docker-compose.yaml gen go.mod go.sum main.go proto README.md server
