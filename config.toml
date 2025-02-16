@@ -1,7 +1,7 @@
 baseurl = "https://williamcook.dev"
 languageCode = "en-us"
 theme = "terminal"
-paginate = 5
+pagination.pagerSize = 5
 
 [params]
   contentTypeName = "content"
@@ -23,7 +23,7 @@ paginate = 5
     title = "William George Cook"
     subtitle = "About me"
     keywords = "developer"
-    copyright = "William George Cook 2024"
+    copyright = "William George Cook 2025"
 
     [languages.en.params.logo]
       logoText = "William George Cook"
